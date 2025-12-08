@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop - Glowing | Premium Skincare Products</title>
+
+  <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body id="top">
+
+  <header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping On All UAE Orders AED 50+</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field" id="shop-search">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+          <button class="header-action-btn" aria-label="user">
+            <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="wishlist-count">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+            <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="cart-count">0</span>
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="index.html" class="navbar-link has-after">Home</a>
+            </li>
+
+            <li>
+              <a href="shop.html" class="navbar-link has-after">Shop</a>
+            </li>
+
+            <li>
+              <a href="collection.html" class="navbar-link has-after">collection</a>
+            </li>
+
+            <li>
+              <a href="about.html" class="navbar-link has-after">About</a>
+            </li>
+
+            <li>
+              <a href="blog.html" class="navbar-link has-after">Blog</a>
+            </li>
+
+            <li>
+              <a href="contact.html" class="navbar-link has-after">Contact</a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="index.html" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="shop.html" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li>
+          <a href="#About" class="navbar-link" data-nav-link>About</a>
+        </li>
+
+        <li>
+          <a href="#Blog" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+
+        <li>
+          <a href="#Contact" class="navbar-link" data-nav-link>Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-overlay></div>
+  </div>
+
+  <!-- Cart Panel -->
+  <div id="cart-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>Shopping Cart</h2>
+        <span class="close" id="close-cart-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="cart-items"></div>
+      </div>
+      <div class="panel-footer">
+        <div class="cart-summary">
+          <div class="cart-total">
+            <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+          </div>
+          <button class="btn btn-primary checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Panel -->
+  <div id="wishlist-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>My Wishlist</h2>
+        <span class="close" id="close-wishlist-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="wishlist-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick View Modal -->
+  <div id="quick-view-modal" class="qv-modal">
+    <div class="qv-modal-content">
+      <div class="qv-modal-header">
+        <h2>Quick View</h2>
+        <span class="close" id="close-qv-modal">&times;</span>
+      </div>
+      <div class="qv-modal-body" id="quick-view-body">
+        <!-- Dynamic content will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <article>
+
+      <!-- Shop Hero Section -->
+      <section class="section shop-hero" aria-label="shop hero">
+        <div class="container">
+          <div class="shop-hero-content">
+            <h1 class="h1 hero-title">Premium Skincare Collection</h1>
+            <p class="hero-text">Discover our complete range of clean, non-toxic skincare products designed for everyone.</p>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="total-products">120+</span>
+                <span class="stat-label">Products</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">4.8★</span>
+                <span class="stat-label">Rating</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Happy Customers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shop Main Section -->
+      <section class="section shop-main" aria-label="shop products">
+        <div class="container">
+          
+          <!-- Shop Controls -->
+          <div class="shop-controls">
+            <div class="shop-controls-left">
+              <button class="filter-toggle-btn" id="filter-toggle">
+                <ion-icon name="options-outline"></ion-icon>
+                <span>Filters</span>
+              </button>
+              <div class="results-count">
+                <span id="results-count">Showing 24 of 120 products</span>
+              </div>
+            </div>
+            
+            <div class="shop-controls-right">
+              <div class="view-toggle">
+                <button class="view-btn active" data-view="grid" aria-label="grid view">
+                  <ion-icon name="grid-outline"></ion-icon>
+                </button>
+                <button class="view-btn" data-view="list" aria-label="list view">
+                  <ion-icon name="list-outline"></ion-icon>
+                </button>
+              </div>
+              
+              <div class="sort-wrapper">
+                <select class="sort-select" id="sort-select">
+                  <option value="popular">Most Popular</option>
+                  <option value="newest">Newest First</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="name">Name A-Z</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="shop-layout">
+            
+            <!-- Filters Sidebar -->
+            <aside class="shop-filters" id="shop-filters">
+              <div class="filters-header">
+                <h3 class="h3">Filters</h3>
+                <button class="clear-filters" id="clear-filters">Clear All</button>
+              </div>
+
+              <!-- Category Filter -->
+              <div class="filter-group">
+                <h4 class="filter-title">Categories</h4>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" name="category" value="skincare" checked>
+                    <span class="checkmark"></span>
+                    <span class="option-text">Skincare <span class="count">(45)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="category" value="haircare">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Haircare <span class="count">(28)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="category" value="perfume">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Perfume <span class="count">(32)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="category" value="accessories">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Accessories <span class="count">(15)</span></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Price Range Filter -->
+              <div class="filter-group">
+                <h4 class="filter-title">Price Range</h4>
+                <div class="price-range-wrapper">
+                  <div class="price-slider-container">
+                    <div class="price-slider">
+                      <div class="price-slider-track" id="price-slider-track"></div>
+                      <input type="range" min="0" max="200" value="0" class="price-range-input" id="price-range-min">
+                      <input type="range" min="0" max="200" value="200" class="price-range-input" id="price-range-max">
+                    </div>
+                  </div>
+                  <div class="price-values">
+                    <span id="price-min-value">AED 0</span>
+                    <span id="price-max-value">AED 200</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Brand Filter -->
+              <div class="filter-group">
+                <h4 class="filter-title">Brands</h4>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" name="brand" value="glowing">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Glowing <span class="count">(67)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="brand" value="bio-essence">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Bio Essence <span class="count">(23)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="brand" value="natural-glow">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Natural Glow <span class="count">(18)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="brand" value="pure-skin">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Pure Skin <span class="count">(12)</span></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Rating Filter -->
+              <div class="filter-group">
+                <h4 class="filter-title">Customer Rating</h4>
+                <div class="filter-options rating-options">
+                  <label class="filter-option">
+                    <input type="checkbox" name="rating" value="5">
+                    <span class="checkmark"></span>
+                    <div class="rating-wrapper">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <span class="count">(89)</span>
+                    </div>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="rating" value="4">
+                    <span class="checkmark"></span>
+                    <div class="rating-wrapper">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star-outline"></ion-icon>
+                      <span class="count">(31)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Availability Filter -->
+              <div class="filter-group">
+                <h4 class="filter-title">Availability</h4>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" name="availability" value="in-stock" checked>
+                    <span class="checkmark"></span>
+                    <span class="option-text">In Stock <span class="count">(98)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="availability" value="low-stock">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Low Stock <span class="count">(12)</span></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" name="availability" value="sale">
+                    <span class="checkmark"></span>
+                    <span class="option-text">On Sale <span class="count">(34)</span></span>
+                  </label>
+                </div>
+              </div>
+
+            </aside>
+
+            <!-- Products Grid -->
+            <div class="shop-content">
+              <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically loaded here -->
+              </div>
+
+              <!-- Load More Button -->
+              <div class="load-more-wrapper">
+                <button class="btn btn-secondary load-more-btn" id="load-more">
+                  <span class="btn-text">Load More Products</span>
+                  <ion-icon name="arrow-down-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Recently Viewed Section -->
+      <section class="section recently-viewed" id="recently-viewed" aria-label="recently viewed">
+        <div class="container">
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Recently Viewed</h2>
+            <button class="btn-link clear-history" id="clear-history">
+              <span class="span">Clear History</span>
+              <ion-icon name="trash-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </div>
+
+          <ul class="has-scrollbar" id="recently-viewed-list">
+            <!-- Recently viewed products will be populated by JavaScript -->
+          </ul>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="footer" data-section>
+    <div class="container">
+
+      <div class="footer-top">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Company</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">
+              Find a location nearest you. See <a href="#" class="link">Our Stores</a>
+            </p>
+          </li>
+
+          <li>
+            <p class="footer-list-text bold">+971 56 722 4253</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543c3138383b1433383b233d3a337a373b39">[email&#160;protected]</a></p>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Useful links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">New Products</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Best Sellers</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Bundle & Save</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Online Gift Card</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Information</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Start a Return</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Shipping FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="newsletter-title">Good emails.</p>
+
+          <p class="newsletter-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email_address" placeholder="Enter your email address" required
+              class="email-field">
+
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="wrapper">
+          <p class="copyright">
+            &copy; 2025 Muhammad Abdul Rashid
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" loading="lazy" alt="Glowing">
+        </a>
+
+        <img src="./assets/images/pay.png" width="313" height="28" alt="available all payment method" class="w-100">
+
+      </div>
+
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/script.js" defer></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

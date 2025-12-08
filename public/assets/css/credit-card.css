@@ -1,0 +1,347 @@
+/* Credit Card Animation Styles */
+
+.credit-card-container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.credit-card {
+  width: 350px;
+  height: 220px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+
+.credit-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-family: 'Courier New', monospace;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Card Front Elements */
+.card-chip {
+  width: 50px;
+  height: 40px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.card-chip::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: linear-gradient(135deg, #e6c200, #d4af00);
+  border-radius: 4px;
+}
+
+.card-number {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-holder,
+.card-expiry {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-info .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.card-info .value {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card-logo {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.visa-logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Card Back Elements */
+.magnetic-strip {
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(90deg, #333, #555, #333);
+  margin: 20px 0;
+  border-radius: 2px;
+}
+
+.cvv-strip {
+  background: white;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.cvv-label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cvv-value {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Card Brand Styles */
+.credit-card.visa .card-front,
+.credit-card.visa .card-back {
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+}
+
+.credit-card.mastercard .card-front,
+.credit-card.mastercard .card-back {
+  background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%);
+}
+
+.credit-card.amex .card-front,
+.credit-card.amex .card-back {
+  background: linear-gradient(135deg, #006fcf 0%, #0048a3 100%);
+}
+
+.credit-card.discover .card-front,
+.credit-card.discover .card-back {
+  background: linear-gradient(135deg, #ff6000 0%, #ff8500 100%);
+}
+
+/* Input Focus Effects */
+.form-group input:focus + .card-number,
+.form-group input:focus + .card-info .value,
+.form-group input:focus + .cvv-value {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Typing Animation */
+.typing-animation {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+/* Card Validation States */
+.card-valid {
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.card-invalid {
+  box-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+}
+
+/* Hover Effects */
+.credit-card:hover {
+  transform: translateY(-5px) rotateX(5deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.credit-card:hover .card-front,
+.credit-card:hover .card-back {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Security Features */
+.hologram {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 25px;
+  background: linear-gradient(45deg, 
+    transparent 25%, 
+    rgba(255, 255, 255, 0.3) 25%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 50%, 
+    transparent 75%, 
+    rgba(255, 255, 255, 0.3) 75%);
+  background-size: 10px 10px;
+  border-radius: 3px;
+  animation: hologram-shimmer 2s infinite;
+}
+
+@keyframes hologram-shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .credit-card {
+    width: 300px;
+    height: 190px;
+  }
+  
+  .card-number {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  
+  .card-info .value {
+    font-size: 14px;
+  }
+  
+  .visa-logo {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .credit-card {
+    width: 280px;
+    height: 175px;
+  }
+  
+  .card-front,
+  .card-back {
+    padding: 15px;
+  }
+  
+  .card-number {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .card-chip {
+    width: 40px;
+    height: 30px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Loading Animation */
+.card-processing {
+  animation: card-pulse 1.5s infinite;
+}
+
+@keyframes card-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Success Animation */
+.card-success {
+  animation: card-success-bounce 0.6s ease;
+}
+
+@keyframes card-success-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Error Animation */
+.card-error {
+  animation: card-shake 0.5s ease;
+}
+
+@keyframes card-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Card Flip Button */
+.card-flip-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.card-flip-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Enhanced Security Strip */
+.security-strip {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.5), 
+    transparent);
+  animation: security-scan 3s infinite;
+}
+
+@keyframes security-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

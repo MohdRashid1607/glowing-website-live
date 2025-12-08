@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Glowing | Our Story & Mission</title>
+
+  <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/about.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body id="top">
+
+  <header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping On All UAE Orders AED 50+</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+          <button class="header-action-btn" aria-label="user">
+            <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="wishlist-count">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+            <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="cart-count">0</span>
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="index.html" class="navbar-link has-after">Home</a>
+            </li>
+
+            <li>
+              <a href="shop.html" class="navbar-link has-after">Shop</a>
+            </li>
+
+            <li><a href="collection.html" class="navbar-link has-after">collection</a></li>
+
+            <li>
+              <a href="about.html" class="navbar-link has-after">About</a>
+            </li>
+
+            <li>
+              <a href="blog.html" class="navbar-link has-after">Blog</a>
+            </li>
+
+            <li>
+              <a href="Contact.html" class="navbar-link has-after">Contact</a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="index.html" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="shop.html" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li><a href="collection.html" class="navbar-link has-after">collection</a></li>
+
+        <li>
+          <a href="about.html" class="navbar-link" data-nav-link>About</a>
+        </li>
+
+        <li>
+          <a href="#Blog" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+
+        <li>
+          <a href="#Contact" class="navbar-link" data-nav-link>Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-overlay></div>
+  </div>
+
+  <!-- Cart Panel -->
+  <div id="cart-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>Shopping Cart</h2>
+        <span class="close" id="close-cart-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="cart-items"></div>
+      </div>
+      <div class="panel-footer">
+        <div class="cart-summary">
+          <div class="cart-total">
+            <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+          </div>
+          <button class="btn btn-primary checkout-btn">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Panel -->
+  <div id="wishlist-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>My Wishlist</h2>
+        <span class="close" id="close-wishlist-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="wishlist-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <article>
+
+      <!-- About Hero Section -->
+      <section class="section about-hero" aria-label="about hero" data-section>
+        <div class="container">
+          <div class="about-hero-content">
+            <nav class="breadcrumb">
+              <a href="index.html" class="breadcrumb-link">Home</a>
+              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-current">About</span>
+            </nav>
+            <h1 class="h1 about-hero-title">Our Story</h1>
+            <p class="about-hero-text">Discover the passion and purpose behind Glowing — where clean beauty meets premium quality.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Story Section -->
+      <section class="section story" aria-label="our story" data-section>
+        <div class="container">
+          <div class="story-content">
+            <div class="story-text">
+              <h2 class="h2 section-title">Why We Created Glowing</h2>
+              <p class="story-paragraph">
+                Glowing was born from a simple yet powerful belief: everyone deserves access to clean, premium skincare that actually works. After years of struggling with products filled with harsh chemicals and empty promises, our founder decided to create something different — a brand that prioritizes your skin's health without compromising on luxury or effectiveness.
+              </p>
+              <p class="story-paragraph">
+                Starting in the heart of the UAE in 2024, we set out to revolutionize the beauty industry by sourcing the finest natural ingredients and combining them with cutting-edge science. Every product in our collection is carefully crafted to deliver visible results while nurturing your skin's natural radiance. This is more than skincare — it's a commitment to your wellbeing.
+              </p>
+            </div>
+            <div class="story-image">
+  <div class="image-wrapper">
+    <video
+      src="https://cdn.pixabay.com/video/2023/08/28/178130-858860163_large.mp4"
+      width="600"
+      height="500"
+      class="img-cover"
+      autoplay
+      muted
+      loop
+      playsinline>
+    </video>
+
+    <div class="image-overlay">
+      <div class="overlay-content">
+        <ion-icon name="leaf-outline"></ion-icon>
+        <span>Clean Beauty</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Mission Section -->
+      <section class="section mission" aria-label="our mission" data-section>
+        <div class="container">
+          <div class="mission-content">
+            <div class="mission-header">
+              <h2 class="h2 section-title">Our Mission</h2>
+              <p class="mission-subtitle">Committed to clean, ethical, and effective beauty solutions</p>
+            </div>
+            
+            <div class="values-grid">
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="leaf-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Natural</h3>
+                <p class="value-text">We harness the power of nature's finest ingredients, carefully selected for their purity and effectiveness.</p>
+              </div>
+              
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Safe</h3>
+                <p class="value-text">Every formula is rigorously tested and free from harmful chemicals, parabens, and sulfates.</p>
+              </div>
+              
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="hand-right-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Handcrafted</h3>
+                <p class="value-text">Each product is meticulously crafted in small batches to ensure the highest quality and attention to detail.</p>
+              </div>
+              
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="heart-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Cruelty-Free</h3>
+                <p class="value-text">We're committed to ethical beauty — never tested on animals, always tested with love.</p>
+              </div>
+              
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="earth-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Eco-Friendly</h3>
+                <p class="value-text">Sustainable packaging and environmentally conscious practices are at the heart of everything we do.</p>
+              </div>
+              
+              <div class="value-card">
+                <div class="value-icon">
+                  <ion-icon name="diamond-outline"></ion-icon>
+                </div>
+                <h3 class="value-title">Premium</h3>
+                <p class="value-text">Luxury shouldn't be compromised — we deliver premium quality that exceeds expectations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timeline Section -->
+      <section class="section timeline" aria-label="our journey" data-section>
+        <div class="container">
+          <div class="timeline-header">
+            <h2 class="h2 section-title">Our Journey</h2>
+            <p class="timeline-subtitle">Milestones that shaped our story</p>
+          </div>
+          
+          <div class="timeline-wrapper">
+            <div class="timeline-item">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Founded in UAE</h3>
+                <p class="timeline-text">Glowing was born in the vibrant beauty landscape of the United Arab Emirates, with a vision to create clean, luxury skincare.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">First Product Launch</h3>
+                <p class="timeline-text">Introduced our signature Vitamin C Brightening Serum, setting the standard for clean, effective skincare.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">2025</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">100+ Happy Customers</h3>
+                <p class="timeline-text">Reached our first major milestone with over 100 satisfied customers across the UAE, each experiencing the Glowing difference.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">2025</div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Complete Collection</h3>
+                <p class="timeline-text">Expanded to a full range of skincare, haircare, and wellness products, all maintaining our commitment to clean beauty.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section class="section team" aria-label="our team" data-section>
+        <div class="container">
+          <div class="team-content">
+            <div class="team-text">
+              <h2 class="h2 section-title">Meet Our Founder</h2>
+              <p class="team-description">
+                Behind every great brand is a passionate individual with a vision. Our founder's journey from skincare struggles to creating Glowing represents the dedication to clean beauty that drives everything we do.
+              </p>
+              <div class="founder-quote">
+                <blockquote>
+                  "I believe that beautiful skin shouldn't come at the cost of your health or the environment. Glowing represents my commitment to creating products that are as kind to your skin as they are to the planet."
+                </blockquote>
+                <cite>— Sarah Al-Mansouri, Founder & CEO</cite>
+              </div>
+            </div>
+            <div class="team-image">
+              <div class="founder-image-wrapper">
+                <img src="https://cdn.pixabay.com/photo/2021/03/04/12/19/woman-6067822_1280.jpg" width="400" height="400" loading="lazy" alt="Sarah Al-Mansouri, Founder of Glowing" class="img-cover">
+                <div class="founder-badge">
+                  <span>Founder</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="section stats" aria-label="our achievements" data-section>
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-number">100+</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">50+</div>
+              <div class="stat-label">Premium Products</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Natural Ingredients</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">0</div>
+              <div class="stat-label">Animal Testing</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="section about-cta" aria-label="explore collection" data-section>
+        <div class="container">
+          <div class="cta-content">
+            <h2 class="h2 cta-title">Ready to Experience Glowing?</h2>
+            <p class="cta-text">
+              Join our community of satisfied customers who have discovered the power of clean, premium skincare. Your journey to healthier, more radiant skin starts here.
+            </p>
+            <div class="cta-actions">
+              <a href="shop.html" class="btn btn-primary">
+                <span class="span">Explore Our Collection</span>
+                <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+              </a>
+              <a href="#Contact" class="btn btn-secondary">
+                <span class="span">Get In Touch</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="footer" data-section>
+    <div class="container">
+
+      <div class="footer-top">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Company</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">
+              Find a location nearest you. See <a href="#" class="link">Our Stores</a>
+            </p>
+          </li>
+
+          <li>
+            <p class="footer-list-text bold">+971 56 722 4253</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="452d2029292a0522292a322c2b226b262a28">[email&#160;protected]</a></p>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Useful links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">New Products</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Best Sellers</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Bundle & Save</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Online Gift Card</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Information</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Start a Return</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Shipping FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="newsletter-title">Good emails.</p>
+
+          <p class="newsletter-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email_address" placeholder="Enter your email address" required
+              class="email-field">
+
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="wrapper">
+          <p class="copyright">
+            &copy; 2025 Muhammad Abdul Rashid
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+        <a href="index.html" class="logo">
+          <img src="./assets/images/logo.png" width="179" height="26" loading="lazy" alt="Glowing">
+        </a>
+
+        <img src="./assets/images/pay.png" width="313" height="28" alt="available all payment method" class="w-100">
+
+      </div>
+
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/script.js" defer></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
