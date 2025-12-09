@@ -3,16 +3,16 @@ const router = express.Router();
 const User = require('../models/user');
 
 // Create a new user
-router.post('/', async (req, res) => {
+
+router.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
-    try {
-        const newUser = new User({ name, email, password });
-        await newUser.save();
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
+
+    const newUser = new User({ name, email, password });
+    await newUser.save();
+
+    res.send("User registered");
 });
+
 
 // Get all users
 router.get('/', async (req, res) => {
