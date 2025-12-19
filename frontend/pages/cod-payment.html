@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash on Delivery - Glowing</title>
+    <link rel="shortcut icon" href="../../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .payment-container {
+            max-width: 700px;
+            margin: 150px auto 80px;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .payment-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .payment-icon ion-icon {
+            font-size: 48px;
+            color: white;
+        }
+
+        .payment-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+
+        .payment-subtitle {
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        .order-summary-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .order-summary-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #212529;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 2px solid #dee2e6;
+            font-size: 20px;
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .info-section {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .info-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-section ion-icon {
+            font-size: 24px;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #155724;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-list ion-icon {
+            font-size: 20px;
+            color: #28a745;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .delivery-details {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .delivery-details h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #212529;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #28a745;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Urbanist', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #28a745;
+        }
+
+        .delivery-time-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .time-option {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .time-option:hover {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .time-option input[type="radio"] {
+            display: none;
+        }
+
+        .time-option input[type="radio"]:checked+label {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .time-option.selected {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .time-option label {
+            cursor: pointer;
+            display: block;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .time-option ion-icon {
+            font-size: 24px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .time-option.selected ion-icon {
+            color: #28a745;
+        }
+
+        .payment-amount-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .payment-amount-box h4 {
+            font-size: 14px;
+            color: #856404;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .amount-to-pay {
+            font-size: 32px;
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .payment-note {
+            font-size: 13px;
+            color: #856404;
+            margin: 0;
+        }
+
+        .confirm-button {
+            width: 100%;
+            height: 60px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .confirm-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .confirm-button ion-icon {
+            font-size: 28px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .back-link:hover {
+            color: #28a745;
+        }
+
+        .back-link ion-icon {
+            font-size: 18px;
+        }
+
+        .confirmation-status {
+            text-align: center;
+            padding: 30px;
+            display: none;
+        }
+
+        .confirmation-status.active {
+            display: block;
+        }
+
+        .status-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #d4edda;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .status-icon ion-icon {
+            font-size: 60px;
+            color: #28a745;
+        }
+
+        .confirmation-status h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-status p {
+            color: #6c757d;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .order-number {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #28a745;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                margin: 120px 15px 40px;
+                padding: 25px;
+            }
+
+            .payment-title {
+                font-size: 24px;
+            }
+
+            .confirm-button {
+                height: 55px;
+                font-size: 16px;
+            }
+
+            .delivery-time-options {
+                grid-template-columns: 1fr;
+            }
+
+            .amount-to-pay {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" data-header>
+        <div class="alert">
+            <div class="container">
+                <p class="alert-text">Free Shipping This Week Order Over - AED 55</p>
+            </div>
+        </div>
+
+        <div class="header-top">
+            <div class="container">
+                <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </button>
+
+                <div class="input-wrapper">
+                    <input type="search" name="search" placeholder="Search product" class="search-field">
+                    <button class="search-btn" aria-label="search">
+                        <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+
+                <a href="../../index.html" class="logo">
+                    <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+                </a>
+
+                <div class="header-actions">
+                    <button class="header-action-btn" aria-label="user" onclick="window.location.href='signup.html'">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+                        <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                        <span class="btn-badge" id="wishlist-count">0</span>
+                    </button>
+
+                    <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+                        <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+                        <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                        <span class="btn-badge" id="cart-count">0</span>
+                    </button>
+                </div>
+
+                <nav class="navbar">
+                    <ul class="navbar-list">
+                        <li><a href="../../index.html" class="navbar-link has-after">Home</a></li>
+                        <li><a href="shop.html" class="navbar-link has-after">Shop</a></li>
+                        <li><a href="about.html" class="navbar-link has-after">About</a></li>
+                        <li><a href="blog.html" class="navbar-link has-after">Blog</a></li>
+                        <li><a href="contact.html" class="navbar-link has-after">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navbar -->
+    <div class="sidebar">
+        <div class="mobile-navbar" data-navbar>
+            <div class="wrapper">
+                <a href="../../index.html" class="logo">
+                    <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+                </a>
+                <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                    <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                </button>
+            </div>
+            <ul class="navbar-list">
+                <li><a href="../../index.html" class="navbar-link" data-nav-link>Home</a></li>
+                <li><a href="shop.html" class="navbar-link" data-nav-link>Shop</a></li>
+                <li><a href="collection.html" class="navbar-link">Collection</a></li>
+                <li><a href="about.html" class="navbar-link" data-nav-link>About</a></li>
+                <li><a href="blog.html" class="navbar-link" data-nav-link>Blog</a></li>
+                <li><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+            </ul>
+        </div>
+        <div class="overlay" data-overlay></div>
+    </div>
+
+    <main>
+        <div class="payment-container">
+            <div class="payment-header">
+                <div class="payment-icon">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+                <h1 class="payment-title">Cash on Delivery</h1>
+                <p class="payment-subtitle">Pay when you receive your order</p>
+            </div>
+
+            <!-- Order Content -->
+            <div id="order-content">
+                <div class="order-summary-box">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">AED 0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping:</span>
+                        <span id="shipping">AED 15.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax:</span>
+                        <span id="tax">AED 0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total:</span>
+                        <span id="total">AED 0.00</span>
+                    </div>
+                </div>
+
+                <div class="payment-amount-box">
+                    <h4>AMOUNT TO PAY ON DELIVERY</h4>
+                    <div class="amount-to-pay" id="cod-amount">AED 0.00</div>
+                    <p class="payment-note">Please keep exact change ready for faster delivery</p>
+                </div>
+
+                <div class="info-section">
+                    <h4>
+                        <ion-icon name="information-circle"></ion-icon>
+                        How Cash on Delivery Works
+                    </h4>
+                    <ul class="info-list">
+                        <li>
+                            <ion-icon name="checkmark-circle"></ion-icon>
+                            <span>Your order will be confirmed immediately</span>
+                        </li>
+                        <li>
+                            <ion-icon name="checkmark-circle"></ion-icon>
+                            <span>We'll deliver to your doorstep within 2-5 business days</span>
+                        </li>
+                        <li>
+                            <ion-icon name="checkmark-circle"></ion-icon>
+                            <span>Pay the delivery person in cash when you receive your order</span>
+                        </li>
+                        <li>
+                            <ion-icon name="checkmark-circle"></ion-icon>
+                            <span>Inspect your items before making payment</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="delivery-details">
+                    <h3>Delivery Details</h3>
+
+                    <div class="form-group">
+                        <label class="form-label">Contact Phone Number *</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="+971 50 123 4567" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Alternative Phone Number (Optional)</label>
+                        <input type="tel" class="form-input" id="alt-phone" placeholder="+971 50 123 4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Preferred Delivery Time</label>
+                        <div class="delivery-time-options">
+                            <div class="time-option" onclick="selectTimeSlot(this, 'morning')">
+                                <ion-icon name="sunny-outline"></ion-icon>
+                                <input type="radio" name="time-slot" id="morning" value="morning">
+                                <label for="morning">Morning<br>(9 AM - 12 PM)</label>
+                            </div>
+                            <div class="time-option" onclick="selectTimeSlot(this, 'afternoon')">
+                                <ion-icon name="partly-sunny-outline"></ion-icon>
+                                <input type="radio" name="time-slot" id="afternoon" value="afternoon">
+                                <label for="afternoon">Afternoon<br>(12 PM - 4 PM)</label>
+                            </div>
+                            <div class="time-option selected" onclick="selectTimeSlot(this, 'evening')">
+                                <ion-icon name="moon-outline"></ion-icon>
+                                <input type="radio" name="time-slot" id="evening" value="evening" checked>
+                                <label for="evening">Evening<br>(4 PM - 8 PM)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Special Delivery Instructions (Optional)</label>
+                        <textarea class="form-textarea" id="instructions"
+                            placeholder="e.g., Ring the doorbell twice, Leave at reception, Building landmark, etc."></textarea>
+                    </div>
+                </div>
+
+                <button class="confirm-button" onclick="confirmCODOrder()">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    <span>Confirm Order</span>
+                </button>
+
+                <center>
+                    <a href="checkout.html" class="back-link">
+                        <ion-icon name="arrow-back"></ion-icon>
+                        <span>Back to checkout</span>
+                    </a>
+                </center>
+            </div>
+
+            <!-- Confirmation Status -->
+            <div class="confirmation-status" id="confirmation-status">
+                <div class="status-icon">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                </div>
+                <h3>Order Confirmed!</h3>
+                <p>Thank you for your order. Your order has been confirmed and will be delivered soon.</p>
+                <div class="order-number" id="order-number">Order #12345</div>
+                <p>You will receive a confirmation SMS shortly.</p>
+                <p><strong>Amount to pay on delivery:</strong> <span id="final-amount">AED 0.00</span></p>
+                <button class="confirm-button" onclick="window.location.href='../../index.html'"
+                    style="margin-top: 30px;">
+                    <ion-icon name="home"></ion-icon>
+                    <span>Back to Home</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/checkout-handler.js"></script>
+
+    <script>
+        // ============================================================
+        // CASH ON DELIVERY PAYMENT - Complete JavaScript
+        // ============================================================
+
+        // ============================================================
+        // PAGE INITIALIZATION
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('=== COD PAYMENT PAGE LOADED ===');
+
+            // Validate cart and checkout data
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const checkoutData = JSON.parse(localStorage.getItem('checkoutData')) || {};
+
+            console.log('📦 Cart items:', cart.length);
+            console.log('👤 Customer:', checkoutData.customerName);
+
+            // Redirect if cart is empty
+            if (cart.length === 0) {
+                console.error('⚠️ Cart is empty! Redirecting...');
+                alert('Your cart is empty. Please add items first.');
+                window.location.href = 'shop.html';
+                return;
+            }
+
+            // Warn if no customer data
+            if (!checkoutData.customerName || checkoutData.customerName === 'Guest User') {
+                console.warn('⚠️ No customer name found in checkout data');
+            }
+
+            // 🔥 ADD USER TO ADMIN (if not already added during checkout)
+            if (checkoutData.customerName && checkoutData.customerEmail) {
+                ensureUserInAdmin(checkoutData);
+            }
+
+            // Load order summary
+            loadOrderSummary();
+            if (typeof updateCartDisplay === 'function') {
+                updateCartDisplay();
+            }
+        });
+
+        // ============================================================
+        // LOAD ORDER SUMMARY
+        // ============================================================
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                window.location.href = 'checkout.html';
+                return;
+            }
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+
+            const shipping = subtotal > 55 ? 0 : 15;
+            const tax = subtotal * 0.05;
+            const total = subtotal + shipping + tax;
+
+            document.getElementById('subtotal').textContent = `AED ${subtotal.toFixed(2)}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `AED ${shipping.toFixed(2)}`;
+            document.getElementById('tax').textContent = `AED ${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `AED ${total.toFixed(2)}`;
+            document.getElementById('cod-amount').textContent = `AED ${total.toFixed(2)}`;
+            document.getElementById('final-amount').textContent = `AED ${total.toFixed(2)}`;
+        }
+
+        // ============================================================
+        // SAVE ORDER TO ADMIN PANEL (Main Function)
+        // ============================================================
+        function saveOrderToAdmin(paymentMethod) {
+            console.log('💾 === SAVING ORDER ===');
+            console.log('Payment method:', paymentMethod);
+
+            // Get cart
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            console.log('📦 Cart items:', cart.length);
+
+            if (cart.length === 0) {
+                console.error('❌ Cart is empty!');
+                return null;
+            }
+
+            // Get checkout data
+            const checkoutData = JSON.parse(localStorage.getItem('checkoutData')) || {};
+            console.log('📋 Checkout data:', checkoutData);
+            console.log('👤 Customer name:', checkoutData.customerName);
+
+            // Validate customer name
+            if (!checkoutData.customerName || checkoutData.customerName === 'undefined undefined') {
+                console.error('❌ No valid customer name!');
+
+                // Fallback: Ask for name
+                const name = prompt('Please enter your name:');
+                if (name && name.trim()) {
+                    checkoutData.customerName = name.trim();
+                } else {
+                    console.error('❌ No name provided!');
+                    return null;
+                }
+            }
+
+            // Calculate totals
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+
+            const shipping = subtotal > 55 ? 0 : 15;
+            const tax = subtotal * 0.05;
+            const total = subtotal + shipping + tax;
+
+            // Create order object
+            const order = {
+                id: Date.now(),
+                customerName: checkoutData.customerName,
+                customerEmail: checkoutData.customerEmail || 'no-email@example.com',
+                customerPhone: checkoutData.customerPhone || 'N/A',
+                shippingAddress: checkoutData.shippingAddress || 'N/A',
+                paymentMethod: paymentMethod,
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    image: item.image
+                })),
+                subtotal: subtotal,
+                shipping: shipping,
+                tax: tax,
+                total: total,
+                status: 'pending',
+                date: new Date().toISOString()
+            };
+
+            console.log('📦 Order created:', order);
+            console.log('👤 Final customer:', order.customerName, order.customerEmail);
+
+            // Save to localStorage (BOTH keys for compatibility)
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            let adminOrders = JSON.parse(localStorage.getItem('adminOrders')) || [];
+
+            orders.push(order);
+            adminOrders.push(order);
+
+            localStorage.setItem('orders', JSON.stringify(orders));
+            localStorage.setItem('adminOrders', JSON.stringify(adminOrders));
+
+            console.log('✅ Order saved to both keys');
+            console.log('📊 Total orders:', orders.length);
+            console.log('✅ === ORDER SAVE COMPLETE ===');
+
+            return order;
+        }
+
+        // ============================================================
+        // ENSURE USER IS IN ADMIN (Backup function)
+        // ============================================================
+        function ensureUserInAdmin(checkoutData) {
+            console.log('🔍 Checking if user exists in admin...');
+
+            if (!checkoutData.customerEmail || !checkoutData.customerName) {
+                console.log('⚠️ Missing email or name, skipping user check');
+                return;
+            }
+
+            let adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || [];
+            const userExists = adminUsers.some(u => u.email === checkoutData.customerEmail);
+
+            if (!userExists) {
+                console.log('➕ User not found, adding to admin users...');
+                const newUser = {
+                    id: Date.now(),
+                    name: checkoutData.customerName,
+                    email: checkoutData.customerEmail,
+                    phone: checkoutData.customerPhone || 'N/A',
+                    role: 'user',
+                    joined: new Date().toISOString()
+                };
+
+                adminUsers.push(newUser);
+                localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
+
+                console.log('✅ User added to admin:', newUser.name);
+                console.log('📊 Total users:', adminUsers.length);
+            } else {
+                console.log('✅ User already exists in admin');
+            }
+        }
+
+        // ============================================================
+        // SELECT TIME SLOT
+        // ============================================================
+        function selectTimeSlot(element, slot) {
+            // Remove selected class from all options
+            document.querySelectorAll('.time-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Check the radio button
+            document.getElementById(slot).checked = true;
+        }
+
+        // ============================================================
+        // CONFIRM COD ORDER
+        // ============================================================
+        function confirmCODOrder() {
+            const phone = document.getElementById('phone').value;
+
+            if (!phone.trim()) {
+                alert('Please enter your contact phone number');
+                document.getElementById('phone').focus();
+                return;
+            }
+
+            // Get selected time slot
+            const selectedTime = document.querySelector('input[name="time-slot"]:checked');
+            if (!selectedTime) {
+                alert('Please select a preferred delivery time');
+                return;
+            }
+
+            // Hide order content
+            document.getElementById('order-content').style.display = 'none';
+
+            // Show confirmation
+            const confirmationEl = document.getElementById('confirmation-status');
+            confirmationEl.classList.add('active');
+
+            // Save order to admin panel
+            const order = saveOrderToAdmin('Cash on Delivery');
+
+            if (order) {
+                console.log('🎉 Order #' + order.id + ' saved to admin panel!');
+
+                // Update order number in confirmation
+                document.getElementById('order-number').textContent = `Order #${order.id}`;
+            } else {
+                console.error('❌ Failed to save order!');
+            }
+
+            // Send confirmation email if CheckoutSystem is available
+            if (typeof CheckoutSystem !== 'undefined') {
+                const checkoutSystem = new CheckoutSystem();
+                const orderNumber = checkoutSystem.generateOrderNumber('COD');
+
+                checkoutSystem.sendOrderConfirmationEmail(orderNumber, 'Cash on Delivery')
+                    .then(() => {
+                        console.log('✅ Order confirmation email sent');
+                    })
+                    .catch((error) => {
+                        console.error('❌ Email send failed:', error);
+                    });
+            }
+
+            // Clear cart after a delay (1 second)
+            setTimeout(() => {
+                localStorage.removeItem('cart');
+                localStorage.removeItem('checkoutData');
+            }, 1000);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

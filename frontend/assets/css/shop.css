@@ -1,0 +1,582 @@
+/* ADD THIS CSS TO THE END OF YOUR style.css FILE (after line 2500 or at the very end) */
+
+/*-----------------------------------*\
+  #QUICK VIEW MODAL - ENHANCED
+\*-----------------------------------*/
+
+.qv-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.qv-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.qv-modal-content {
+  background-color: var(--white);
+  border-radius: 12px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.9) translateY(-20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.qv-modal.active .qv-modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.qv-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px;
+  border-bottom: 2px solid var(--light-gray);
+  background-color: var(--cultured-1);
+}
+
+.qv-modal-header h2 {
+  margin: 0;
+  font-size: var(--fs-4);
+  color: var(--black);
+}
+
+.qv-modal-header .close {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--gray-web);
+  cursor: pointer;
+  transition: var(--transition-1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--white);
+}
+
+.qv-modal-header .close:hover {
+  color: var(--white);
+  background-color: var(--hoockers-green);
+  transform: rotate(90deg);
+}
+
+.qv-modal-body {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  min-height: 400px;
+}
+
+.qv-image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--light-gray);
+  aspect-ratio: 3/4;
+}
+
+.qv-image-wrapper .img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-2);
+}
+
+.qv-image-wrapper:hover .img-cover {
+  transform: scale(1.05);
+}
+
+.qv-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: var(--fs-9);
+  font-weight: var(--fw-700);
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.qv-badge.new {
+  background-color: #3b82f6;
+  left: auto;
+  right: 15px;
+}
+
+@keyframes badgePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.qv-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.qv-title {
+  margin: 0;
+  font-size: var(--fs-3);
+  line-height: 1.3;
+  color: var(--black);
+}
+
+.qv-price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-4);
+  font-weight: var(--fw-700);
+}
+
+.qv-price .del {
+  color: var(--spanish-gray);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-400);
+  text-decoration: line-through;
+}
+
+.qv-price .span {
+  color: var(--hoockers-green);
+}
+
+.qv-rating {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.qv-rating .rating-wrapper {
+  display: flex;
+  gap: 3px;
+  color: var(--hoockers-green);
+  font-size: 20px;
+}
+
+.qv-rating .rating-text {
+  font-size: var(--fs-8);
+  color: var(--gray-web);
+  margin: 0;
+}
+
+.stock-status {
+  font-size: var(--fs-8);
+  font-weight: var(--fw-600);
+  padding: 10px 16px;
+  border-radius: 8px;
+  background-color: #fef3c7;
+  color: #92400e;
+  margin: 0;
+  display: inline-block;
+}
+
+.stock-status.critical {
+  background-color: #fee2e2;
+  color: #991b1b;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.stock-status.low {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.qv-description {
+  font-size: var(--fs-7);
+  line-height: 1.8;
+  color: var(--gray-web);
+  margin: 0;
+}
+
+.qv-meta {
+  display: flex;
+  gap: 30px;
+  font-size: var(--fs-8);
+  color: var(--gray-web);
+  padding: 20px 0;
+  border-top: 2px solid var(--light-gray);
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.qv-meta p {
+  margin: 0;
+}
+
+.qv-meta strong {
+  color: var(--black);
+  font-weight: var(--fw-600);
+}
+
+.qv-actions {
+  display: flex;
+  gap: 15px;
+  margin-block-start: 10px;
+}
+
+.qv-actions .btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 24px;
+  font-size: var(--fs-7);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.qv-actions .btn-primary {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+}
+
+.qv-actions .btn-primary:hover {
+  background-color: var(--black);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.qv-actions .view-details-btn {
+  background-color: var(--cultured-1);
+  color: var(--black);
+  border: 2px solid var(--light-gray);
+}
+
+.qv-actions .view-details-btn:hover {
+  background-color: var(--light-gray);
+  border-color: var(--hoockers-green);
+}
+
+/* Loading State for Modal */
+.qv-modal-body.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.qv-modal-body.loading::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--light-gray);
+  border-top-color: var(--hoockers-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Modal */
+@media (max-width: 992px) {
+  .qv-modal-body {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+  }
+
+  .qv-image-wrapper {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .qv-modal-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .qv-modal-header {
+    padding: 20px;
+  }
+
+  .qv-modal-body {
+    padding: 20px;
+  }
+
+  .qv-title {
+    font-size: var(--fs-4);
+  }
+
+  .qv-actions {
+    flex-direction: column;
+  }
+
+  .qv-meta {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .qv-modal-header h2 {
+    font-size: var(--fs-6);
+  }
+
+  .qv-modal-body {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .qv-image-wrapper {
+    max-height: 300px;
+  }
+
+  .qv-price {
+    font-size: var(--fs-5);
+  }
+}
+
+/*-----------------------------------*\
+  #RECENTLY VIEWED - ENHANCED
+\*-----------------------------------*/
+/* Recently Viewed Section Enhancements */
+.recently-viewed {
+  background: linear-gradient(135deg, var(--cultured-1) 0%, var(--white) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.recently-viewed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hoockers-green), transparent);
+}
+
+#recently-viewed-list:empty::after {
+  content: 'No recently viewed products yet. Start browsing to see your history here!';
+  display: block;
+  text-align: center;
+  color: var(--spanish-gray);
+  font-size: var(--fs-7);
+  padding: 60px 20px;
+  font-style: italic;
+  background-color: var(--cultured-2);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+/* Ensure product cards have data attributes */
+.shop-card[data-product] {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.shop-card[data-product]:hover {
+  transform: translateY(-5px);
+}
+
+.recently-viewed {
+  background: linear-gradient(135deg, var(--cultured-1) 0%, var(--white) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.recently-viewed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hoockers-green), transparent);
+}
+
+.recently-viewed .title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block-end: 40px;
+  padding-block-end: 20px;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.recently-viewed .section-title {
+  margin: 0;
+}
+
+.clear-history {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-8);
+  color: var(--spanish-gray);
+  transition: var(--transition-1);
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 25px;
+  background-color: transparent;
+  border: none;
+}
+
+.clear-history:hover {
+  color: var(--hoockers-green);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.clear-history ion-icon {
+  font-size: 18px;
+}
+
+.recently-viewed .has-scrollbar {
+  padding-block: 20px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hoockers-green) var(--light-gray);
+}
+
+.recently-viewed .shop-card {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.recently-viewed .shop-card::before {
+  content: 'Recently Viewed';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--white);
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 3;
+  opacity: 0;
+  transition: var(--transition-1);
+}
+
+.recently-viewed .shop-card:hover::before {
+  opacity: 1;
+}
+
+.recently-viewed .shop-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty State for Recently Viewed */
+#recently-viewed-list:empty::after,
+#recently-viewed-list p {
+  content: 'No recently viewed products yet. Start browsing to see your history here!';
+  display: block;
+  text-align: center;
+  color: var(--spanish-gray);
+  font-size: var(--fs-7);
+  padding: 60px 20px;
+  font-style: italic;
+  background-color: var(--cultured-2);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+/*-----------------------------------*\
+  #SHOP CARD ENHANCEMENTS
+\*-----------------------------------*/
+
+.shop-card .card-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 100%);
+  opacity: 0;
+  transition: var(--transition-2);
+  z-index: 1;
+}
+
+.shop-card:hover .card-banner::before {
+  opacity: 1;
+}
+
+.shop-card .badge {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Smooth Hover Effects */
+.shop-card .action-btn {
+  transform: scale(1);
+  transition: all 0.2s ease;
+}
+
+.shop-card .action-btn:hover {
+  transform: scale(1.15);
+}
+
+.shop-card .action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Card Title Hover */
+.shop-card .card-title {
+  position: relative;
+  display: inline-block;
+}
+
+.shop-card .card-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--hoockers-green);
+  transition: width 0.3s ease;
+}
+
+.shop-card .card-title:hover::after {
+  width: 100%;
+}

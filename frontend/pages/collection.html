@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections - Glowing</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="../../favicon.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/collection.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body id="top">
+
+  <!--#HEADER-->
+  <header class="header">
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping On All U.S. Orders $50+</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field" id="searchField">
+          <button class="search-submit" aria-label="search" onclick="performSearch()">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+          <div class="user-dropdown-wrapper">
+            <a href="signup.html" class="header-action-link" id="signup-link">
+              <button class="header-action-btn" aria-label="user">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              </button>
+            </a>
+            <button class="header-action-btn user-btn" aria-label="user" id="user-dropdown-btn" style="display: none;">
+              <div class="user-avatar" id="user-avatar">
+                <span id="user-initials"></span>
+              </div>
+            </button>
+            <div class="user-dropdown" id="user-dropdown">
+              <div class="dropdown-header">
+                <div class="user-info">
+                  <p class="user-name" id="dropdown-user-name"></p>
+                  <p class="user-email" id="dropdown-user-email"></p>
+                </div>
+              </div>
+              <div class="dropdown-menu">
+                <a href="dashboard.html" class="dropdown-item">
+                  <ion-icon name="grid-outline"></ion-icon>
+                  <span>Dashboard</span>
+                </a>
+                <a href="collection.html" class="dropdown-item active">
+                  <ion-icon name="albums-outline"></ion-icon>
+                  <span>Collections</span>
+                </a>
+                <button class="dropdown-item" id="header-logout-btn">
+                  <ion-icon name="log-out-outline"></ion-icon>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="wishlist-count">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+            <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="cart-count">0</span>
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="../../index.html" class="navbar-link" data-nav-link>Home</a></li>
+            <li><a href="shop.html" class="navbar-link" data-nav-link>Shop</a></li>
+            <li><a href="collection.html" class="navbar-link has-after">collection</a></li>
+            <li><a href="about.html" class="navbar-link" data-nav-link>About</a></li>
+            <li><a href="blog.html" class="navbar-link" data-nav-link>Blog</a></li>
+            <li><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navbar -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <ul class="navbar-list">
+        <li><a href="../../index.html" class="navbar-link" data-nav-link>Home</a></li>
+        <li><a href="collection.html" class="navbar-link" data-nav-link>Collection</a></li>
+        <li><a href="shop.html" class="navbar-link" data-nav-link>Shop</a></li>
+        <li><a href="offer.html" class="navbar-link" data-nav-link>Offer</a></li>
+        <li><a href="blog.html" class="navbar-link" data-nav-link>Blog</a></li>
+      </ul>
+    </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+  <!-- Cart Panel -->
+  <div id="cart-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>Shopping Cart</h2>
+        <span class="close" id="close-cart-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="cart-items"></div>
+      </div>
+      <div class="panel-footer">
+        <div class="cart-summary">
+          <div class="cart-total">
+            <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+          </div>
+          <a href="checkout.html" class="btn btn-primary checkout-btn">Checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Panel -->
+  <div id="wishlist-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>My Wishlist</h2>
+        <span class="close" id="close-wishlist-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="wishlist-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collection Page Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="collection-hero" data-section>
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="h1 hero-title">Our Collections</h1>
+          <p class="hero-text">Discover curated skincare collections designed for every skin type and concern</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Collections -->
+    <section class="section featured-collections" data-section>
+      <div class="container">
+        <h2 class="h2 section-title">Featured Collections</h2>
+
+        <div class="collections-grid" id="featuredCollections">
+          <!-- Collections will be loaded here by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- All Collections -->
+    <section class="section all-collections" data-section>
+      <div class="container">
+        <div class="title-wrapper">
+          <h2 class="h2 section-title">All Collections</h2>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="skincare">Skincare</button>
+            <button class="filter-tab" data-filter="seasonal">Seasonal</button>
+            <button class="filter-tab" data-filter="special">Special Offers</button>
+          </div>
+        </div>
+
+        <div class="collections-list" id="allCollections">
+          <!-- Collections will be loaded here by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Collection Products -->
+    <section class="section collection-products" id="collectionProducts" style="display: none;" data-section>
+      <div class="container">
+        <div class="collection-header">
+          <button class="back-btn" onclick="goBackToCollections()">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            Back to Collections
+          </button>
+          <h2 class="h2 collection-title" id="collectionTitle"></h2>
+          <p class="collection-description" id="collectionDescription"></p>
+        </div>
+
+        <div class="products-grid" id="collectionProductsGrid">
+          <!-- Products will be loaded here by JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" data-section>
+    <div class="container">
+      <div class="footer-top">
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Company</p>
+          </li>
+          <li>
+            <p class="footer-list-text">
+              Find a location nearest you. See <a href="store.html" class="link">Our Stores</a>
+            </p>
+          </li>
+          <li>
+            <p class="footer-list-text bold">+391 (0)35 2568 4593</p>
+          </li>
+          <li>
+            <p class="footer-list-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                data-cfemail="e28a878e8e8da2868d8f838b8ccc818d8f">[email&#160;protected]</a></p>
+          </li>
+        </ul>
+
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Useful links</p>
+          </li>
+          <li>
+            <a href="shop.html?category=new" class="footer-link">New Products</a>
+          </li>
+          <li>
+            <a href="shop.html?filter=bestsellers" class="footer-link">Best Sellers</a>
+          </li>
+          <li>
+            <a href="offer.html" class="footer-link">Bundle & Save</a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Online Gift Card</a>
+          </li>
+        </ul>
+
+        <ul class="footer-list">
+          <li>
+            <p class="footer-list-title">Information</p>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Start a Return</a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Shipping FAQ</a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+        </ul>
+
+        <div class="footer-list">
+          <p class="newsletter-title">Good emails.</p>
+          <p class="newsletter-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
+          <form action="" class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" name="email_address" placeholder="Enter your email address" required
+              class="email-field">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="wrapper">
+          <p class="copyright">&copy; 2024 Glowing</p>
+          <ul class="social-list">
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" loading="lazy" alt="Glowing">
+        </a>
+
+        <img src="../assets/images/pay.png" width="313" height="28" alt="available all payment method" class="w-100">
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!-- Overlay -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+
+  <!-- JavaScript -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script src="../assets/js/collection.js" defer></script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

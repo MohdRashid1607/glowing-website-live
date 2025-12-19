@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Glowing</title>
+
+    <link rel="shortcut icon" href="../../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body id="top">
+
+    <header class="header">
+        <div class="alert">
+            <div class="container">
+                <p class="alert-text">Free Shipping On All UAE Orders AED 50+</p>
+            </div>
+        </div>
+
+        <div class="header-top" data-header>
+            <div class="container">
+
+                <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </button>
+
+                <div class="input-wrapper">
+                    <input type="search" name="search" placeholder="Search product" class="search-field">
+                    <button class="search-submit" aria-label="search">
+                        <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+
+                <a href="../../index.html" class="logo">
+                    <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+                </a>
+
+                <div class="header-actions">
+                    <div class="user-dropdown-wrapper">
+                        <button class="header-action-btn user-btn" aria-label="user" id="user-dropdown-btn">
+                            <div class="user-avatar" id="user-avatar">
+                                <span id="user-initials"></span>
+                            </div>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="dropdown-header">
+                                <div class="user-info">
+                                    <p class="user-name" id="dropdown-user-name"></p>
+                                    <p class="user-email" id="dropdown-user-email"></p>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="dashboard.html" class="dropdown-item active">
+                                    <ion-icon name="grid-outline"></ion-icon>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="../../index.html" class="dropdown-item">
+                                    <ion-icon name="home-outline"></ion-icon>
+                                    <span>Home</span>
+                                </a>
+                                <button class="dropdown-item" id="logout-btn">
+                                    <ion-icon name="log-out-outline"></ion-icon>
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+                        <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                        <span class="btn-badge" id="wishlist-count">0</span>
+                    </button>
+
+                    <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+                        <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+                        <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                        <span class="btn-badge" id="cart-count">0</span>
+                    </button>
+                </div>
+
+                <nav class="navbar">
+                    <ul class="navbar-list">
+                        <li><a href="../../index.html#home" class="navbar-link has-after">Home</a></li>
+                        <li><a href="shop.html" class="navbar-link has-after">Shop</a></li>
+                        <li><a href="collection.html" class="navbar-link has-after">Collection</a></li>
+                        <li><a href="about.html" class="navbar-link has-after">About</a></li>
+                        <li><a href="blog.html" class="navbar-link has-after">Blog</a></li>
+                        <li><a href="contact.html" class="navbar-link has-after">Contact</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <div class="mobile-navbar" data-navbar>
+            <div class="wrapper">
+                <a href="../../index.html" class="logo">
+                    <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+                </a>
+                <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                    <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                </button>
+            </div>
+
+            <ul class="navbar-list">
+                <li><a href="../../index.html#home" class="navbar-link" data-nav-link>Home</a></li>
+                <li><a href="shop.html" class="navbar-link" data-nav-link>Shop</a></li>
+                <li><a href="collection.html" class="navbar-link" data-nav-link>Collection</a></li>
+                <li><a href="about.html" class="navbar-link" data-nav-link>About</a></li>
+                <li><a href="blog.html" class="navbar-link" data-nav-link>Blog</a></li>
+                <li><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="overlay" data-overlay></div>
+    </div>
+
+    <div id="cart-panel" class="side-panel">
+        <div class="panel-content">
+            <div class="panel-header">
+                <h2>Shopping Cart</h2>
+                <span class="close" id="close-cart-panel">&times;</span>
+            </div>
+            <div class="panel-body">
+                <div id="cart-items"></div>
+            </div>
+            <div class="panel-footer">
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary checkout-btn">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist-panel" class="side-panel">
+        <div class="panel-content">
+            <div class="panel-header">
+                <h2>My Wishlist</h2>
+                <span class="close" id="close-wishlist-panel">&times;</span>
+            </div>
+            <div class="panel-body">
+                <div id="wishlist-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+
+            <aside class="dashboard-sidebar">
+                <div class="sidebar-header">
+                    <h2>Dashboard</h2>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <button class="sidebar-link active" data-section="profile">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <span>Profile</span>
+                    </button>
+
+                    <button class="sidebar-link" data-section="orders">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        <span>Orders</span>
+                    </button>
+
+                    <button class="sidebar-link" data-section="wishlist">
+                        <ion-icon name="heart-outline"></ion-icon>
+                        <span>Wishlist</span>
+                    </button>
+
+                    <button class="sidebar-link" data-section="settings">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        <span>Settings</span>
+                    </button>
+
+                    <button class="sidebar-link logout-link" id="sidebar-logout-btn">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        <span>Logout</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <div class="dashboard-content">
+
+                <!-- Profile Section -->
+                <section class="dashboard-section active" id="profile-section">
+                    <div class="section-header">
+                        <h1>My Profile</h1>
+                        <p>Manage your personal information</p>
+                    </div>
+
+                    <div class="profile-grid">
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h3>Personal Information</h3>
+                                <button class="btn-edit" id="edit-profile-btn">
+                                    <ion-icon name="create-outline"></ion-icon>
+                                    Edit
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-row">
+                                    <span class="label">First Name</span>
+                                    <span class="value" id="profile-firstname"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">Last Name</span>
+                                    <span class="value" id="profile-lastname"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">Email</span>
+                                    <span class="value" id="profile-email"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">Phone</span>
+                                    <span class="value" id="profile-phone"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">Member Since</span>
+                                    <span class="value" id="profile-created"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h3>Account Statistics</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="stat-grid">
+                                    <div class="stat-item">
+                                        <ion-icon name="receipt-outline"></ion-icon>
+                                        <div class="stat-info">
+                                            <span class="stat-value" id="total-orders">0</span>
+                                            <span class="stat-label">Total Orders</span>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <ion-icon name="heart-outline"></ion-icon>
+                                        <div class="stat-info">
+                                            <span class="stat-value" id="total-wishlist">0</span>
+                                            <span class="stat-label">Wishlist Items</span>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <ion-icon name="star-outline"></ion-icon>
+                                        <div class="stat-info">
+                                            <span class="stat-value" id="total-reviews">0</span>
+                                            <span class="stat-label">Reviews</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Orders Section -->
+                <section class="dashboard-section" id="orders-section">
+                    <div class="section-header">
+                        <h1>My Orders</h1>
+                        <p>Track and manage your orders</p>
+                    </div>
+
+                    <div class="orders-container">
+                        <div class="empty-state">
+                            <ion-icon name="receipt-outline"></ion-icon>
+                            <h3>No Orders Yet</h3>
+                            <p>Start shopping to see your orders here</p>
+                            <a href="shop.html" class="btn btn-primary">Browse Products</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wishlist Section -->
+                <section class="dashboard-section" id="wishlist-section">
+                    <div class="section-header">
+                        <h1>My Wishlist</h1>
+                        <p>Your saved items</p>
+                    </div>
+
+                    <div class="wishlist-grid" id="dashboard-wishlist-grid">
+                        <!-- Wishlist items will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section class="dashboard-section" id="settings-section">
+                    <div class="section-header">
+                        <h1>Settings</h1>
+                        <p>Manage your account preferences</p>
+                    </div>
+
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Change Password</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="change-password-form">
+                                    <div class="form-group">
+                                        <label>Current Password</label>
+                                        <input type="password" class="form-input" placeholder="Enter current password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>New Password</label>
+                                        <input type="password" class="form-input" placeholder="Enter new password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm New Password</label>
+                                        <input type="password" class="form-input" placeholder="Confirm new password">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update Password</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Notifications</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Email Notifications</h4>
+                                        <p>Receive order updates via email</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Promotional Emails</h4>
+                                        <p>Get notified about sales and offers</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>SMS Notifications</h4>
+                                        <p>Receive SMS for order updates</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+
+</body>
+
+</html>

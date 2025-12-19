@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Glowing | Get In Touch</title>
+
+  <link rel="shortcut icon" href="../../favicon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/contact.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+</head>
+
+<body id="top">
+
+  <header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping On All UAE Orders AED 50+</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+          <div class="user-dropdown-wrapper">
+            <a href="signup.html" class="header-action-link" id="signup-link">
+              <button class="header-action-btn" aria-label="user">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              </button>
+            </a>
+            <button class="header-action-btn user-btn" aria-label="user" id="user-dropdown-btn" style="display: none;">
+              <div class="user-avatar" id="user-avatar">
+                <span id="user-initials"></span>
+              </div>
+            </button>
+            <div class="user-dropdown" id="user-dropdown">
+              <div class="dropdown-header">
+                <div class="user-info">
+                  <p class="user-name" id="dropdown-user-name"></p>
+                  <p class="user-email" id="dropdown-user-email"></p>
+                </div>
+              </div>
+              <div class="dropdown-menu">
+                <a href="dashboard.html" class="dropdown-item">
+                  <ion-icon name="grid-outline"></ion-icon>
+                  <span>Dashboard</span>
+                </a>
+                <a href="contact.html" class="dropdown-item active">
+                  <ion-icon name="mail-outline"></ion-icon>
+                  <span>Contact</span>
+                </a>
+                <button class="dropdown-item" id="header-logout-btn">
+                  <ion-icon name="log-out-outline"></ion-icon>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="wishlist-count">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item" id="cart-btn">
+            <data class="btn-text" value="0" id="cart-total">AED 0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge" id="cart-count">0</span>
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="../../index.html" class="navbar-link has-after">Home</a>
+            </li>
+
+            <li>
+              <a href="shop.html" class="navbar-link has-after">Shop</a>
+            </li>
+
+            <li><a href="collection.html" class="navbar-link has-after">collection</a></li>
+
+            <li>
+              <a href="about.html" class="navbar-link has-after">About</a>
+            </li>
+
+            <li>
+              <a href="blog.html" class="navbar-link has-after">Blog</a>
+            </li>
+
+            <li>
+              <a href="contact.html" class="navbar-link has-after">Contact</a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="../../index.html" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="shop.html" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li>
+          <a href="collection.html" class="navbar-link has-after">collection</a>
+        </li>
+
+        <li>
+          <a href="about.html" class="navbar-link" data-nav-link>About</a>
+        </li>
+
+        <li>
+          <a href="blog.html" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+
+        <li>
+          <a href="contact.html" class="navbar-link" data-nav-link>Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-overlay></div>
+  </div>
+
+  <!-- Cart Panel -->
+  <div id="cart-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>Shopping Cart</h2>
+        <span class="close" id="close-cart-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="cart-items"></div>
+      </div>
+      <div class="panel-footer">
+        <div class="cart-summary">
+          <div class="cart-total">
+            <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+          </div>
+          <a href="checkout.html" class="btn btn-primary checkout-btn">Checkout</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Panel -->
+  <div id="wishlist-panel" class="side-panel">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2>My Wishlist</h2>
+        <span class="close" id="close-wishlist-panel">&times;</span>
+      </div>
+      <div class="panel-body">
+        <div id="wishlist-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <article>
+
+      <!-- Contact Hero Section -->
+      <section class="section contact-hero" aria-label="contact hero" data-section>
+        <div class="container">
+          <div class="contact-hero-content">
+            <nav class="breadcrumb">
+              <a href="../../index.html" class="breadcrumb-link">Home</a>
+              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-current">Contact</span>
+            </nav>
+            <h1 class="h1 contact-hero-title">Get In Touch</h1>
+            <p class="contact-hero-text">We'd love to hear from you. Send us a message and we'll respond as soon as
+              possible.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Main Section -->
+      <section class="section contact-main" aria-label="contact information" data-section>
+        <div class="container">
+
+          <div class="contact-layout">
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+              <h2 class="h2 section-title">Contact Information</h2>
+              <p class="contact-intro">Ready to start your skincare journey? Reach out to us through any of the
+                following channels.</p>
+
+              <div class="contact-methods">
+
+                <div class="contact-method">
+                  <div class="method-icon">
+                    <ion-icon name="location-outline"></ion-icon>
+                  </div>
+                  <div class="method-content">
+                    <h3 class="method-title">Visit Our Store</h3>
+                    <p class="method-text">Dubai Mall, Fashion Avenue<br>Downtown Dubai, UAE</p>
+                  </div>
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">
+                    <ion-icon name="call-outline"></ion-icon>
+                  </div>
+                  <div class="method-content">
+                    <h3 class="method-title">Call Us</h3>
+                    <p class="method-text">
+                      <a href="tel:+971567224253" class="method-link">+971 56 722 4253</a><br>
+                      <span class="method-hours">Mon - Sat: 9:00 AM - 9:00 PM</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">
+                    <ion-icon name="mail-outline"></ion-icon>
+                  </div>
+                  <div class="method-content">
+                    <h3 class="method-title">Email Us</h3>
+                    <p class="method-text">
+                      <a href="/cdn-cgi/l/email-protection#056d6069696a4562696a726c6b622b666a68"
+                        class="method-link"><span class="__cf_email__"
+                          data-cfemail="1d75787171725d7a71726a74737a337e7270">[email&#160;protected]</span></a><br>
+                      <a href="/cdn-cgi/l/email-protection#5b282e2b2b34292f1b3c37342c32353c75383436"
+                        class="method-link"><span class="__cf_email__"
+                          data-cfemail="aad9dfdadac5d8deeacdc6c5ddc3c4cd84c9c5c7">[email&#160;protected]</span></a>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">
+                    <ion-icon name="logo-whatsapp"></ion-icon>
+                  </div>
+                  <div class="method-content">
+                    <h3 class="method-title">WhatsApp</h3>
+                    <p class="method-text">
+                      <a href="https://wa.me/971567224253" target="_blank" class="method-link whatsapp-link">
+                        <span>Chat with us instantly</span>
+                        <ion-icon name="open-outline"></ion-icon>
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Business Hours -->
+              <div class="business-hours">
+                <h3 class="hours-title">Business Hours</h3>
+                <div class="hours-list">
+                  <div class="hours-item">
+                    <span class="day">Monday - Friday</span>
+                    <span class="time">9:00 AM - 9:00 PM</span>
+                  </div>
+                  <div class="hours-item">
+                    <span class="day">Saturday</span>
+                    <span class="time">10:00 AM - 10:00 PM</span>
+                  </div>
+                  <div class="hours-item">
+                    <span class="day">Sunday</span>
+                    <span class="time">12:00 PM - 8:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-wrapper">
+              <div class="contact-form-container">
+                <h2 class="h2 form-title">Send Us a Message</h2>
+                <p class="form-subtitle">Have a question about our products or need skincare advice? We're here to help!
+                </p>
+
+                <form class="contact-form" id="contact-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="firstName" class="form-label">First Name *</label>
+                      <input type="text" id="firstName" name="firstName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="lastName" class="form-label">Last Name *</label>
+                      <input type="text" id="lastName" name="lastName" class="form-input" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-input">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subject" class="form-label">Subject *</label>
+                    <select id="subject" name="subject" class="form-select" required>
+                      <option value="">Select a subject</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="product">Product Question</option>
+                      <option value="skincare">Skincare Consultation</option>
+                      <option value="order">Order Support</option>
+                      <option value="partnership">Business Partnership</option>
+                      <option value="feedback">Feedback & Reviews</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="message" class="form-label">Message *</label>
+                    <textarea id="message" name="message" rows="6" class="form-textarea"
+                      placeholder="Tell us how we can help you..." required></textarea>
+                  </div>
+
+                  <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="newsletter" name="newsletter" class="form-checkbox">
+                      <span class="checkmark"></span>
+                      <span class="checkbox-text">I'd like to receive beauty tips and product updates via email</span>
+                    </label>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary submit-btn">
+                      <span class="btn-text">Send Message</span>
+                      <ion-icon name="send-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Success Message -->
+                <div class="success-message" id="success-message">
+                  <div class="success-content">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section class="section contact-map" aria-label="location map" data-section>
+        <div class="container">
+          <div class="map-header">
+            <h2 class="h2 section-title">Find Us</h2>
+            <p class="map-subtitle">Visit our flagship store in the heart of Dubai for a personalized skincare
+              experience.</p>
+          </div>
+
+          <div class="map-container">
+            <div class="map-wrapper">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.1739405732937!2d55.27455831501432!3d25.197197083896487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sDubai%20Mall!5e0!3m2!1sen!2sae!4v1635789012345!5m2!1sen!2sae"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" title="Glowing Store Location - Dubai Mall">
+              </iframe>
+            </div>
+
+            <div class="map-info">
+              <div class="location-card">
+                <div class="location-header">
+                  <h3 class="location-title">Glowing Flagship Store</h3>
+                  <span class="location-status open">Open Now</span>
+                </div>
+                <div class="location-details">
+                  <div class="location-item">
+                    <ion-icon name="location-outline"></ion-icon>
+                    <span>Dubai Mall, Fashion Avenue, Ground Floor, Dubai, UAE</span>
+                  </div>
+                  <div class="location-item">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <span>Open until 10:00 PM today</span>
+                  </div>
+                  <div class="location-item">
+                    <ion-icon name="call-outline"></ion-icon>
+                    <a href="tel:+971567224253">+971 56 722 4253</a>
+                  </div>
+                </div>
+                <div class="location-actions">
+                  <a href="https://maps.google.com/?q=Dubai+Mall" target="_blank" class="btn btn-secondary">
+                    <ion-icon name="navigate-outline"></ion-icon>
+                    <span>Get Directions</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="section contact-faq" aria-label="frequently asked questions" data-section>
+        <div class="container">
+          <div class="faq-header">
+            <h2 class="h2 section-title">Frequently Asked Questions</h2>
+            <p class="faq-subtitle">Quick answers to common questions about our products and services.</p>
+          </div>
+
+          <div class="faq-list">
+
+            <div class="faq-item">
+              <button class="faq-question" data-faq-toggle>
+                <span>What are your shipping options within the UAE?</span>
+                <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+              </button>
+              <div class="faq-answer">
+                <p>We offer free shipping on all orders over AED 50 within the UAE. Standard delivery takes 1-2 business
+                  days in Dubai and 2-3 business days for other emirates. Express same-day delivery is available in
+                  Dubai for an additional fee.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" data-faq-toggle>
+                <span>How do I choose the right skincare products for my skin type?</span>
+                <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+              </button>
+              <div class="faq-answer">
+                <p>We recommend starting with our online skin assessment or visiting our store for a personalized
+                  consultation. Our skincare experts can analyze your skin and recommend the perfect routine based on
+                  your specific needs and concerns.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" data-faq-toggle>
+                <span>What is your return and exchange policy?</span>
+                <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+              </button>
+              <div class="faq-answer">
+                <p>We offer a 30-day return policy for unopened products in original packaging. For opened products, we
+                  accept returns within 14 days if you're not satisfied. All returns must include the original receipt
+                  or order confirmation.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" data-faq-toggle>
+                <span>Are your products suitable for sensitive skin?</span>
+                <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+              </button>
+              <div class="faq-answer">
+                <p>Yes! All our products are formulated with gentle, clean ingredients and are suitable for sensitive
+                  skin. We avoid harsh chemicals, parabens, and sulfates. However, we always recommend patch testing new
+                  products before full application.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" data-faq-toggle>
+                <span>Do you offer virtual skincare consultations?</span>
+                <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+              </button>
+              <div class="faq-answer">
+                <p>Absolutely! We offer virtual consultations via video call with our certified skincare experts. Book a
+                  session through our website or WhatsApp, and we'll create a personalized skincare routine just for
+                  you.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="footer" data-section>
+    <div class="container">
+
+      <div class="footer-top">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Company</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">
+              Find a location nearest you. See <a href="contact.html" class="link">Our Stores</a>
+            </p>
+          </li>
+
+          <li>
+            <p class="footer-list-text bold">+971 56 722 4253</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                data-cfemail="b8d0ddd4d4d7f8dfd4d7cfd1d6df96dbd7d5">[email&#160;protected]</a></p>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Useful links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">New Products</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Best Sellers</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Bundle & Save</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Online Gift Card</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Information</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Start a Return</a>
+          </li>
+
+          <li>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Shipping FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="newsletter-title">Good emails.</p>
+
+          <p class="newsletter-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email_address" placeholder="Enter your email address" required
+              class="email-field">
+
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="wrapper">
+          <p class="copyright">
+            &copy; 2025 Muhammad Abdul Rashid
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+        <a href="../../index.html" class="logo">
+          <img src="../assets/images/logo.png" width="179" height="26" loading="lazy" alt="Glowing">
+        </a>
+
+        <img src="../assets/images/pay.png" width="313" height="28" alt="available all payment method" class="w-100">
+
+      </div>
+
+    </div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script src="../assets/js/contact.js" defer></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
