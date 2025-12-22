@@ -1,5 +1,10 @@
 # Glowing – Premium Skincare Full-Stack Platform
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/database-MongoDB-green)](https://www.mongodb.com/)
+[![Aesthetics](https://img.shields.io/badge/Aesthetics-Premium-gold)](https://glowing.com)
+
 Glowing is a full-stack e-commerce web application developed as an academic project, focused on clean architecture, modular design, and practical implementation of modern web technologies. The project demonstrates the integration of a responsive frontend with a secure Node.js backend and a MongoDB database.
 
 ## Full-Stack Overview
@@ -143,10 +148,6 @@ backend/
 ## Admin Access
 
 Administrative users are seeded in the database for demonstration purposes. Credentials can be configured directly through the database.
-
-**Default Test Admin:**
-- **Email**: `admin@test.com`
-- **Password**: `admin123`
 
 ## Developer
 
