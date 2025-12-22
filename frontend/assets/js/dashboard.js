@@ -2,15 +2,50 @@
 class DashboardManager {
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    this.token = localStorage.getItem('token') || null;
     this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
-    if (!this.currentUser) {
-      // Redirect to signup if not logged in
+    if (!this.currentUser && !this.token) {
+      // Redirect to signup if not logged in at all
       window.location.href = 'signup.html';
       return;
     }
 
-    this.init();
+    // If we have a token but no user data, fetch it
+    if (!this.currentUser && this.token) {
+      this.fetchUserProfile();
+    } else {
+      this.init();
+    }
+  }
+
+  async fetchUserProfile() {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/me', {
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+        }
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        this.currentUser = data.data;
+        // Normalize for frontend
+        if (this.currentUser.name && !this.currentUser.firstName) {
+          const parts = this.currentUser.name.split(' ');
+          this.currentUser.firstName = parts[0];
+          this.currentUser.lastName = parts.slice(1).join(' ');
+        }
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        this.init();
+      } else {
+        localStorage.removeItem('token');
+        window.location.href = 'signup.html';
+      }
+    } catch (err) {
+      console.error('Error fetching profile:', err);
+      window.location.href = 'signup.html';
+    }
   }
 
   init() {
@@ -23,9 +58,16 @@ class DashboardManager {
   }
 
   loadUserData() {
+    // Basic normalization if needed
+    if (this.currentUser.name && !this.currentUser.firstName) {
+      const parts = this.currentUser.name.split(' ');
+      this.currentUser.firstName = parts[0];
+      this.currentUser.lastName = parts.slice(1).join(' ');
+    }
+
     // Update profile section
-    document.getElementById('profile-firstname').textContent = this.currentUser.firstName || 'N/A';
-    document.getElementById('profile-lastname').textContent = this.currentUser.lastName || 'N/A';
+    document.getElementById('profile-firstname').textContent = this.currentUser.firstName || this.currentUser.name || 'N/A';
+    document.getElementById('profile-lastname').textContent = this.currentUser.lastName || '';
     document.getElementById('profile-email').textContent = this.currentUser.email || 'N/A';
     document.getElementById('profile-phone').textContent = this.currentUser.phone || 'N/A';
 

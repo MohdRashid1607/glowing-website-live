@@ -47,6 +47,23 @@ app.use(cors({
     credentials: true
 }));
 
+// Serve static files from the frontend directory
+app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
+
+// Explicitly serve index.html and favicon from root
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/favicon.svg', (req, res) => {
+    res.sendFile(path.join(__dirname, '../favicon.svg'));
+});
+
+// Redirect root to index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
 // Route files
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');

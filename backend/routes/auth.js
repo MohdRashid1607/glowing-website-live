@@ -32,12 +32,26 @@ router.get(
                 <body>
                     <script>
                         localStorage.setItem('token', '${token}');
-                        // Try common frontend ports
-                        const ports = [5500, 3000, 5000]; 
-                        let redirected = false;
                         
-                        // For now redirect to generic dashboard
-                        window.location.href = '/frontend/pages/dashboard.html';
+                        // Mock the currentUser object expected by the frontend
+                        const name = "${req.user.name}";
+                        const nameParts = name.split(' ');
+                        const user = {
+                            _id: "${req.user._id}",
+                            name: name,
+                            firstName: nameParts[0] || name,
+                            lastName: nameParts.slice(1).join(' ') || '',
+                            email: "${req.user.email}",
+                            avatar: "${req.user.avatar}",
+                            role: "${req.user.role}",
+                            createdAt: "${req.user.createdAt}"
+                        };
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        
+                        // Small delay to ensure localStorage is written
+                        setTimeout(() => {
+                            window.location.href = '/frontend/pages/dashboard.html';
+                        }, 500);
                     </script>
                     <p>Redirecting to dashboard...</p>
                 </body>
