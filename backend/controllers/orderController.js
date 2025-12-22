@@ -14,7 +14,8 @@ exports.newOrder = async (req, res, next) => {
             taxPrice,
             shippingPrice,
             totalPrice,
-            paymentInfo
+            paymentInfo,
+            paymentMethod
         } = req.body;
 
         const order = await Order.create({
@@ -25,6 +26,7 @@ exports.newOrder = async (req, res, next) => {
             shippingPrice,
             totalPrice,
             paymentInfo,
+            paymentMethod,
             paidAt: Date.now(),
             user: req.user._id
         });
