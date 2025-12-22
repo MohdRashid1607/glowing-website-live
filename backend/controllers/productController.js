@@ -44,30 +44,19 @@ exports.createProduct = async (req, res, next) => {
     try {
         req.body.user = req.user.id;
 
-        // Handle image upload if images are provided
-        let images = [];
-        if (typeof req.body.images === 'string') {
-            images.push(req.body.images);
+        // Handle image upload with Cloudinary
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'products'
+            });
+
+            req.body.image = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
         } else {
-            images = req.body.images;
+            return res.status(400).json({ success: false, error: 'Please upload an image' });
         }
-
-        const imagesLinks = [];
-
-        if (images) {
-            for (let i = 0; i < images.length; i++) {
-                const result = await cloudinary.uploader.upload(images[i], {
-                    folder: 'products'
-                });
-
-                imagesLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url
-                });
-            }
-        }
-
-        req.body.images = imagesLinks;
 
         const product = await Product.create(req.body);
 
@@ -91,34 +80,22 @@ exports.updateProduct = async (req, res, next) => {
             return res.status(404).json({ success: false, error: 'Product not found' });
         }
 
-        // Handle images update if provided
-        if (req.body.images !== undefined) {
-            // Delete existing images from Cloudinary
-            for (let i = 0; i < product.images.length; i++) {
-                await cloudinary.uploader.destroy(product.images[i].public_id);
+        // Handle image update
+        if (req.file) {
+            // Delete old image from Cloudinary
+            if (product.image && product.image.public_id) {
+                await cloudinary.uploader.destroy(product.image.public_id);
             }
 
-            let images = [];
-            if (typeof req.body.images === 'string') {
-                images.push(req.body.images);
-            } else {
-                images = req.body.images;
-            }
+            // Upload new image
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: 'products'
+            });
 
-            const imagesLinks = [];
-
-            for (let i = 0; i < images.length; i++) {
-                const result = await cloudinary.uploader.upload(images[i], {
-                    folder: 'products'
-                });
-
-                imagesLinks.push({
-                    public_id: result.public_id,
-                    url: result.secure_url
-                });
-            }
-
-            req.body.images = imagesLinks;
+            req.body.image = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
         }
 
         product = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -146,9 +123,9 @@ exports.deleteProduct = async (req, res, next) => {
             return res.status(404).json({ success: false, error: 'Product not found' });
         }
 
-        // Deleting images associated with the product from Cloudinary
-        for (let i = 0; i < product.images.length; i++) {
-            await cloudinary.uploader.destroy(product.images[i].public_id);
+        // Delete image from Cloudinary
+        if (product.image && product.image.public_id) {
+            await cloudinary.uploader.destroy(product.image.public_id);
         }
 
         await product.deleteOne();

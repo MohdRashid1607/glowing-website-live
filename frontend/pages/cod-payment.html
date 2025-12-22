@@ -843,7 +843,7 @@
         // ============================================================
         // CONFIRM COD ORDER
         // ============================================================
-        function confirmCODOrder() {
+        async function confirmCODOrder() {
             const phone = document.getElementById('phone').value;
 
             if (!phone.trim()) {
@@ -859,6 +859,12 @@
                 return;
             }
 
+            // Initialize checkout system to use its methods
+            const checkoutSystem = new CheckoutSystem();
+
+            // Save order to MongoDB Backend
+            const backendOrder = await checkoutSystem.submitOrderToBackend('Cash on Delivery');
+
             // Hide order content
             document.getElementById('order-content').style.display = 'none';
 
@@ -866,31 +872,29 @@
             const confirmationEl = document.getElementById('confirmation-status');
             confirmationEl.classList.add('active');
 
-            // Save order to admin panel
+            // Save order to legacy admin panel (localStorage)
             const order = saveOrderToAdmin('Cash on Delivery');
 
-            if (order) {
-                console.log('🎉 Order #' + order.id + ' saved to admin panel!');
+            if (backendOrder) {
+                console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
+            }
 
-                // Update order number in confirmation
-                document.getElementById('order-number').textContent = `Order #${order.id}`;
+            if (order) {
+                console.log('🎉 Order #' + order.id + ' saved to localStorage!');
+                document.getElementById('order-number').textContent = `Order #` + (backendOrder ? backendOrder._id.slice(-8).toUpperCase() : order.id);
             } else {
                 console.error('❌ Failed to save order!');
             }
 
-            // Send confirmation email if CheckoutSystem is available
-            if (typeof CheckoutSystem !== 'undefined') {
-                const checkoutSystem = new CheckoutSystem();
-                const orderNumber = checkoutSystem.generateOrderNumber('COD');
-
-                checkoutSystem.sendOrderConfirmationEmail(orderNumber, 'Cash on Delivery')
-                    .then(() => {
-                        console.log('✅ Order confirmation email sent');
-                    })
-                    .catch((error) => {
-                        console.error('❌ Email send failed:', error);
-                    });
-            }
+            // Send confirmation email
+            const orderNumber = checkoutSystem.generateOrderNumber('COD');
+            checkoutSystem.sendOrderConfirmationEmail(orderNumber, 'Cash on Delivery')
+                .then(() => {
+                    console.log('✅ Order confirmation email sent');
+                })
+                .catch((error) => {
+                    console.error('❌ Email send failed:', error);
+                });
 
             // Clear cart after a delay (1 second)
             setTimeout(() => {

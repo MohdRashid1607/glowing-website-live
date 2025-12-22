@@ -223,6 +223,63 @@ class CheckoutSystem {
     });
   }
 
+  async submitOrderToBackend(paymentMethod, extraDetails = {}) {
+    const data = JSON.parse(localStorage.getItem('checkoutData')) || this.checkoutData;
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.warn('User not logged in, order will be saved as guest in backend if enabled');
+    }
+
+    const orderData = {
+      shippingInfo: {
+        address: data.shipping.address || 'N/A',
+        city: data.shipping.city || data.shipping.emirate || 'N/A',
+        phoneNo: data.contact.phone || 'N/A',
+        postalCode: '00000', // Default if not provided
+        country: 'UAE'
+      },
+      orderItems: data.cart.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        image: item.image,
+        price: item.price,
+        product: null // Product reference is optional for now
+      })),
+      itemsPrice: data.subtotal,
+      taxPrice: data.tax,
+      shippingPrice: data.shipping,
+      totalPrice: data.total,
+      paymentInfo: {
+        id: this.generateOrderNumber('PAY'),
+        status: paymentMethod === 'Cash on Delivery' ? 'Pending' : 'Succeeded'
+      }
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/orders/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        console.log('✅ Order saved to MongoDB:', result.order._id);
+        return result.order;
+      } else {
+        console.error('❌ Backend error:', result.error);
+        return null;
+      }
+    } catch (error) {
+      console.error('❌ Failed to connect to backend:', error);
+      return null;
+    }
+  }
+
   generateOrderNumber(prefix = 'GLW') {
     const timestamp = Date.now();
     const random = Math.floor(Math.random() * 1000);

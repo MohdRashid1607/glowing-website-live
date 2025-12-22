@@ -19,7 +19,17 @@ const ProductSchema = new mongoose.Schema({
     category: {
         type: String,
         required: [true, 'Please add a category'],
-        enum: ['Books', 'Electronics', 'Stationery', 'Apparel', 'Other']
+        enum: ['Cleansers', 'Moisturizers', 'Serums', 'Masks', 'Sunscreen', 'Treatments', 'Other']
+    },
+    image: {
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
     },
     images: [{
         public_id: {

@@ -22,13 +22,18 @@ const OrderSchema = new mongoose.Schema({
             product: {
                 type: mongoose.Schema.ObjectId,
                 ref: 'Product',
-                required: true
+                required: false // Set to false for testing if products aren't seeded yet
             }
         }
     ],
     paymentInfo: {
         id: { type: String },
         status: { type: String }
+    },
+    paymentMethod: {
+        type: String,
+        required: [true, 'Please select payment method'],
+        enum: ['COD', 'PayPal', 'Card', 'Bank Transfer']
     },
     paidAt: {
         type: Date

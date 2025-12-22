@@ -202,7 +202,6 @@ class ModernAuthManager {
     const formData = new FormData(form);
     const email = formData.get('email');
     const password = formData.get('password');
-    const remember = formData.get('remember');
 
     // Validate form
     if (!this.validateForm(form)) {
@@ -211,44 +210,50 @@ class ModernAuthManager {
     }
 
     // Show loading state
-    const submitBtn = form.querySelector('.auth-btn') || form.querySelector('button[type="submit"]');
+    const submitBtn = form.querySelector('.auth-btn');
     if (submitBtn) {
       this.setLoadingState(submitBtn, true);
     }
 
     try {
-      // Simulate API call with realistic delay
-      await this.delay(1500);
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-      // Check credentials
-      const user = this.users.find(u => u.email === email && u.password === password);
+      const data = await response.json();
 
-      if (user) {
+      if (data.success) {
         // Successful login
-        this.currentUser = { ...user };
-        delete this.currentUser.password; // Don't store password
+        this.currentUser = data.user;
+        localStorage.setItem('token', data.token);
 
+        // Get user profile to store in currentUser
+        const meResponse = await fetch('http://localhost:5000/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+        const meData = await meResponse.json();
+        this.currentUser = meData.data;
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-
-        if (remember) {
-          localStorage.setItem('rememberUser', 'true');
-        }
 
         // Add success animation to button
         submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
 
-        this.showSuccessModal('Welcome Back!', `Good to see you again, ${user.firstName}!`);
+        this.showSuccessModal('Welcome Back!', `Good to see you again!`);
 
         // Update UI
         this.updateAuthUI();
-
       } else {
-        this.showNotification('Invalid email or password', 'error');
+        this.showNotification(data.error || 'Invalid email or password', 'error');
       }
-
     } catch (error) {
       console.error('Sign in error:', error);
-      this.showNotification('Sign in failed. Please try again.', 'error');
+      this.showNotification('Could not connect to server. Make sure your backend is running.', 'error');
     } finally {
       if (submitBtn) {
         this.setLoadingState(submitBtn, false);
@@ -257,91 +262,70 @@ class ModernAuthManager {
   }
 
   async handleSignUp() {
-    console.log('handleSignUp called');
     const form = document.getElementById('signup-form');
-    console.log('Form found:', form);
-
-    if (!form) {
-      console.error('Signup form not found!');
-      return;
-    }
+    if (!form) return;
 
     const formData = new FormData(form);
-    console.log('Form data:', {
-      fullName: formData.get('fullName'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      password: formData.get('password')
-    });
+    const name = formData.get('fullName');
+    const email = formData.get('email');
+    const password = formData.get('password');
 
     // Validate form
     if (!this.validateForm(form)) {
-      console.log('Form validation failed');
       this.showNotification('Please fill in all fields correctly', 'error');
       return;
     }
 
-    console.log('Form validation passed');
-
-    // Check if user already exists
-    const email = formData.get('email');
-    if (this.users.find(u => u.email === email)) {
-      this.showNotification('An account with this email already exists', 'error');
-      return;
-    }
-
     // Show loading state
-    const submitBtn = form.querySelector('.auth-btn') || form.querySelector('button[type="submit"]');
+    const submitBtn = form.querySelector('.auth-btn');
     if (submitBtn) {
       this.setLoadingState(submitBtn, true);
     }
 
     try {
-      // Simulate API call
-      await this.delay(2000);
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
 
-      // Create new user
-      const fullName = formData.get('fullName') || '';
-      const nameParts = fullName.trim().split(' ');
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
+      const data = await response.json();
 
-      const newUser = {
-        id: Date.now().toString(),
-        firstName: firstName,
-        lastName: lastName,
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        password: formData.get('password'), // In real app, this would be hashed
-        createdAt: new Date().toISOString(),
-        isVerified: false
-      };
+      if (data.success) {
+        localStorage.setItem('token', data.token);
 
-      this.users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(this.users));
+        // Get user profile
+        const meResponse = await fetch('http://localhost:5000/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+        const meData = await meResponse.json();
+        this.currentUser = meData.data;
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-      // Auto sign in
-      this.currentUser = { ...newUser };
-      delete this.currentUser.password;
-      localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        // Add success animation
+        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
 
-      // Add success animation
-      submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        this.showSuccessModal('Account Created!', 'Welcome! Your account has been created successfully and saved in MongoDB.');
 
-      this.showSuccessModal('Account Created!', 'Welcome to Glowing! Your account has been created successfully.');
-
-      // Update UI
-      this.updateAuthUI();
-
+        // Update UI
+        this.updateAuthUI();
+      } else {
+        this.showNotification(data.error || 'Account creation failed', 'error');
+      }
     } catch (error) {
       console.error('Sign up error:', error);
-      this.showNotification('Account creation failed. Please try again.', 'error');
+      this.showNotification('Could not connect to server. Make sure your backend is running.', 'error');
     } finally {
       if (submitBtn) {
         this.setLoadingState(submitBtn, false);
       }
     }
   }
+
 
   async handleForgotPassword() {
     const form = document.getElementById('forgot-form');
@@ -602,6 +586,10 @@ function switchToSignUp() {
 
 function switchToSignIn() {
   modernAuthManager.switchToSignIn();
+}
+
+function handleGoogleSignIn() {
+  window.location.href = 'http://localhost:5000/api/auth/google';
 }
 
 function switchToForgot() {
