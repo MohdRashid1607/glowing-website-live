@@ -4,7 +4,8 @@ const {
     register,
     login,
     logout,
-    getMe
+    getMe,
+    getUsers
 } = require('../controllers/authController');
 
 const router = express.Router();
@@ -15,6 +16,10 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/me', protect, getMe);
+
+// Admin routes
+const { authorize } = require('../middleware/auth');
+router.get('/admin/users', protect, authorize('admin'), getUsers);
 
 // Google OAuth Routes
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
