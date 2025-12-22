@@ -1,132 +1,88 @@
-# ✨ Glowing - Premium Skincare E-commerce Platform ✨
+# Glowing - Premium Skincare Fullstack Platform
 
-![Glowing Banner](https://raw.githubusercontent.com/MohdRashid1607/assignment-100-tomorrow-s-web-MohdRashid1607/main/frontend/assets/images/logo.png)
+A high-performance e-commerce ecosystem built with a focus on premium aesthetics and robust functionality. This project covers everything from a liquid-smooth frontend experience to a comprehensive management dashboard and a secure Node.js backend.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/database-MongoDB-green)](https://www.mongodb.com/)
-[![Aesthetics](https://img.shields.io/badge/Aesthetics-Premium-gold)](https://glowing.com)
+## �️ Full-Stack Overview
 
-**Glowing** is a sophisticated, full-stack e-commerce application designed for premium skincare products. It features a stunning glassmorphism design, real-time data synchronization, and a powerful admin ecosystem to manage every aspect of a modern online store.
-
----
-
-## 🖼️ Featured Pages
-
-- **Home (`index.html`)**: A breathtaking landing page featuring a hero carousel, promotional cards, and newsletter integration.
-- **Shop (`shop.html`)**: The core shopping experience with dynamic product loading, advanced filtering, and a seamless Quick View modal.
-- **Admin Dashboard (`admin.html`)**: A high-tech control center with dark-mode analytics, user management, and order status tracking.
-- **Checkout & Cart**: A streamlined, single-page checkout flow with PayPal and COD support.
+This project is a complete end-to-end solution featuring:
+- **Client Side**: 10+ responsive pages including Shop, Collection, Blog, and a custom Checkout flow.
+- **Admin Side**: A desktop-optimized dashboard for managing sales, users, and inventory.
+- **Backend API**: A Node.js/Express server handling authentication, database operations, and file uploads.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Core Features
 
-### 🛍️ Customer Experience
-- **Premium Aesthetics**: Crafted with a focus on modern typography, sleek gradients, and micro-animations.
-- **Smart Search**: Real-time product searching across the entire inventory.
-- **Interactive Cart & Wishlist**: Persistent state management using LocalStorage and Backend sync.
-- **Google OAuth**: One-tap secure login for a frictionless user experience.
-- **Recently Viewed**: Context-aware product history to keep customers engaged.
-- **Responsive Layouts**: Meticulously tested for mobile performance and accessibility.
+### � Frontend Excellence
+- **Custom JS Systems**: Decoupled systems for `Cart`, `Wishlist`, `QuickView`, and `RecentlyViewed` to ensure high performance.
+- **Responsive Navigation**: Full mobile support with a custom-built sidebar and sticky header logic.
+- **Dynamic Shop**: Advanced product grid with real-time filtering (Category, Brand, Price, Rating) without page reloads.
+- **UX Details**: Micro-animations, hover effects, image lazy-loading, and a preloader for a premium feel.
+- **Auth Flow**: Integrated Google OAuth and traditional JWT login/signup with custom validations.
 
-### ⚙️ Admin Intelligence
-- **Data Visualization**: Interactive graphs for revenue tracking and category performance.
-- **Inventory Control**: Real-time stock alerts and bulk product management.
-- **User Auditing**: Monitor new signups and manage administrative permissions.
-- **Live Sync**: Every 60 seconds, the dashboard refreshes with the latest orders from the backend.
+### 📊 Admin Intelligence
+- **Real-time Stats**: Interactive data visualization using **Chart.js** (Revenue logs, Order status, Category performance).
+- **Inventory Control**: Full CRUD interface to add, delete, and modify products with automatic sync across the site.
+- **User Auditing**: Management portal to monitor customer registrations and administrative roles.
+- **Order Processing**: Live order tracking system allowing admins to update shipment statuses.
 
----
-
-## 🛠️ Technology Stack
-
-| Layer | Technology |
-|---|---|
-| **Frontend** | HTML5, CSS3 (Vanilla), JavaScript (ES6+), Ionicons, Chart.js |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB with Mongoose ODM |
-| **Auth** | JSON Web Tokens (JWT), Passport.js (Google OAuth 2.0) |
-| **Tools** | Multer (File Uploads), Dotenv, CORS, Bcrypt.js |
+### 🔐 Secure Backend
+- **RESTful API**: Structured endpoints for all e-commerce operations.
+- **Database**: MongoDB integration via Mongoose with optimized schemas for Orders and Users.
+- **Security**: Password hashing with Bcrypt, JWT session management, and protected Admin routes.
+- **Integrations**: Supports PayPal and Cash on Delivery (COD) payment modes.
 
 ---
 
-## 📦 Getting Started
+## � Tech Stack
 
-### Prerequisites
-- Node.js installed on your machine.
-- A MongoDB database (Local or Atlas).
+- **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+), Ionicons, Chart.js.
+- **Backend**: Node.js, Express.js.
+- **Database**: MongoDB, Mongoose.
+- **Authentication**: JWT, Passport.js (Google OAuth 2.0).
+- **Storage**: Multer for local product images.
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/MohdRashid1607/assignment-100-tomorrow-s-web-MohdRashid1607.git
-cd assignment-100-tomorrow-s-web-MohdRashid1607
-```
+---
 
-### 2. Backend Setup
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file and add your credentials:
+## 📦 Local Setup
+
+### Backend (Server)
+1. Go to the `backend` directory: `cd backend`
+2. Install packages: `npm install`
+3. Configure your `.env`:
    ```env
    PORT=5000
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret_key
-   GOOGLE_CLIENT_ID=your_id
-   GOOGLE_CLIENT_SECRET=your_secret
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   GOOGLE_CLIENT_ID=your_google_id
+   GOOGLE_CLIENT_SECRET=your_google_secret
    ```
-4. Start the server:
-   ```bash
-   npm run dev
-   ```
+4. Run the server: `npm run dev`
 
-### 3. Frontend Setup
-Simply open `index.html` (root) or the landing page in your browser.
-- Uses local storage for immediate persistence.
-- Connects to `http://localhost:5000/api` for real-time operations.
+### Frontend (Client)
+- No build step required. Open `index.html` via Live Server or simply drag into any browser.
+- Ensure the backend is running on port 5000 for full functionality.
 
 ---
 
 ## 📂 Project Structure
 
-```bash
-📦 glowing-ecommerce
- ┣ 📂 backend            # Node.js/Express Server
- ┃ ┣ 📂 models           # Mongoose Schemas (User, Product, Order)
- ┃ ┣ 📂 routes           # API endpoints
- ┃ ┣ 📂 middleware       # Auth and Upload handling
- ┃ ┗ 📜 server.js        # Entry point
- ┣ 📂 frontend           # Client-side files
- ┃ ┣ 📂 assets           # CSS, Images, JS Modules
- ┃ ┣ 📂 pages            # Admin, Shop, Collection, Blog
- ┃ ┗ 📜 index.html       # Homepage
- ┗ 📜 README.md          # Project Documentation
-```
+- `frontend/`: All client-side assets, pages, and logic.
+  - `assets/css/`: Modular stylesheets.
+  - `assets/js/`: Core systems (Cart, Auth, Shop).
+  - `pages/`: Admin, Shop, Blog, etc.
+- `backend/`: Server-side logic.
+  - `models/`: Database schemas.
+  - `routes/`: API controllers.
+- `root/`: Project documentation and config files.
 
 ---
 
-## 🔐 Admin Access
-To access the Admin Panel (`/frontend/pages/admin.html`):
-- **Test Email**: `admin@test.com`
-- **Test Password**: `admin123`
+## � Admin Credentials
+To access the Dashboard (`/frontend/pages/admin.html`):
+- **Email**: `admin@test.com`
+- **Password**: `admin123`
 
 ---
 
-## 👨‍💻 Developed By
-**Muhammad Abdul Rashid**  
-*Front-end & Back-end Developer*
-
----
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-<p align="center">
-  Made with ❤️ for a Seamless Beauty Shopping Experience
-</p>
+**Developed by Muhammad Abdul Rashid**
