@@ -1370,7 +1370,171 @@
     // Save immediately so it's ready for the first render
     localStorage.setItem('adminProducts', JSON.stringify(products));
 
+    const API_BASE_URL = (['localhost', '127.0.0.1', ''].includes(window.location.hostname))
+      ? 'http://localhost:5000'
+      : '';
+
     let orders = JSON.parse(localStorage.getItem('adminOrders')) || [];
+
+    async function fetchOrdersFromBackend() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.warn('⚠️ No admin token found in localStorage. Fetching orders skipped.');
+        return;
+      }
+
+      try {
+        console.log('🔄 Fetching orders from backend...');
+        const response = await fetch(`${API_BASE_URL}/api/orders/admin/all`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('❌ Backend auth error:', errorData);
+          if (response.status === 401 || response.status === 403) {
+            showNotification('Admin Authentication Failed. Please log in as Admin.');
+          }
+          return;
+        }
+
+        const data = await response.json();
+        if (data.success && data.orders) {
+          console.log(`✅ Fetched ${data.orders.length} orders from backend`);
+
+          // Map backend orders to frontend format
+          const backendOrders = data.orders.map(o => ({
+            id: o._id,
+            customerName: o.user ? o.user.name : (o.shippingInfo ? `${o.shippingInfo.firstName || ''} ${o.shippingInfo.lastName || 'Guest'}`.trim() : 'Guest'),
+            customerEmail: o.user ? o.user.email : (o.shippingInfo && o.shippingInfo.email ? o.shippingInfo.email : 'N/A'),
+            customerPhone: o.shippingInfo ? o.shippingInfo.phoneNo : (o.user ? o.user.phone : 'N/A'),
+            shippingAddress: o.shippingInfo ? `${o.shippingInfo.address}, ${o.shippingInfo.city}, ${o.shippingInfo.country || 'UAE'}` : 'N/A',
+            date: o.createdAt || new Date().toISOString(),
+            total: o.totalPrice,
+            status: (o.orderStatus || 'pending').toLowerCase(),
+            items: o.orderItems.map(item => ({
+              id: item.product,
+              name: item.name,
+              quantity: item.quantity,
+              price: item.price
+            }))
+          }));
+
+          // Merge with local orders, avoiding duplicates
+          backendOrders.forEach(mo => {
+            const exists = orders.find(o => o.id === mo.id);
+            if (!exists) {
+              orders.push(mo);
+            } else {
+              // Update existing order data
+              Object.assign(exists, mo);
+            }
+          });
+
+          // Sort by date descending (latest first)
+          orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          saveData();
+          renderOrders();
+        }
+      } catch (error) {
+        console.error('❌ Error fetching orders:', error);
+        if (window.location.protocol === 'file:') {
+          console.warn('⚠️ PRO TIP: Browsers block API calls from file:// protocol. Please open this page via a local web server (like Live Server in VS Code) for it to work.');
+        }
+      }
+    }
+
+    async function fetchUsersFromBackend() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        console.log('🔄 Fetching users from backend...');
+        const response = await fetch(`${API_BASE_URL}/api/auth/admin/users`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+        if (data.success && data.data) {
+          console.log(`✅ Fetched ${data.data.length} users from backend`);
+
+          const mappedUsers = data.data.map(u => ({
+            id: u._id,
+            name: u.name,
+            email: u.email,
+            role: u.role,
+            joined: u.createdAt
+          }));
+
+          // Merge with local users
+          mappedUsers.forEach(mu => {
+            const exists = users.find(u => u.id === mu.id);
+            if (!exists) {
+              users.push(mu);
+            } else {
+              Object.assign(exists, mu);
+            }
+          });
+
+          saveData();
+          renderUsers();
+        }
+      } catch (error) {
+        console.error('❌ Error fetching users:', error);
+      }
+    }
+
+    async function fetchProductsFromBackend() {
+      try {
+        console.log('🔄 Fetching products from backend...');
+        const response = await fetch(`${API_BASE_URL}/api/products`);
+        const data = await response.json();
+
+        if (data.success && data.products) {
+          console.log(`✅ Fetched ${data.products.length} products from backend`);
+
+          const mappedProducts = data.products.map(p => ({
+            id: p._id,
+            name: p.name,
+            price: p.price,
+            originalPrice: p.originalPrice || null,
+            image: p.image,
+            category: p.category,
+            brand: p.brand || 'glowing',
+            rating: p.ratings || 5,
+            reviews: p.numOfReviews || 0,
+            stock: p.stock,
+            description: p.description
+          }));
+
+          // Merge with local products
+          mappedProducts.forEach(mp => {
+            const exists = products.find(p => p.id === mp.id);
+            if (!exists) {
+              products.push(mp);
+            } else {
+              Object.assign(exists, mp);
+            }
+          });
+
+          // Also update products list where id matches but name is different (local vs db)
+          // Filter out defaults if we have db products
+          if (data.products.length > 0) {
+            // Optional: logic to prioritize DB products
+          }
+
+          saveData();
+          renderProducts();
+        }
+      } catch (error) {
+        console.error('❌ Error fetching products:', error);
+      }
+    }
 
     // Chart instances
     let revenueChart, statusChart, categoryChart;
@@ -1787,7 +1951,7 @@
           </thead>
           <tbody>
             ${recentOrders.map(order => `
-              <tr onclick="viewOrderDetails(${order.id})" style="cursor: pointer;">
+              <tr onclick="viewOrderDetails('${order.id}')" style="cursor: pointer;">
                 <td>#${order.id}</td>
                 <td>${order.customerName}</td>
                 <td>${new Date(order.date).toLocaleDateString()}</td>
@@ -1838,11 +2002,11 @@
                 <td><span class="badge badge-${user.role}">${user.role}</span></td>
                 <td>${new Date(user.joined).toLocaleDateString()}</td>
                 <td>
-                  <button class="btn btn-secondary btn-sm" onclick="editUser(${user.id})">
+                  <button class="btn btn-secondary btn-sm" onclick="editUser('${user.id}')">
                     <ion-icon name="create-outline"></ion-icon>
                     Edit
                   </button>
-                  <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">
+                  <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.id}')">
                     <ion-icon name="trash-outline"></ion-icon>
                     Delete
                   </button>
@@ -1884,7 +2048,7 @@
     }
 
     function editUser(id) {
-      const user = users.find(u => u.id === id);
+      const user = users.find(u => u.id.toString() === id.toString());
       document.getElementById('usersList').style.display = 'none';
       document.getElementById('editUserForm').style.display = 'block';
       document.getElementById('editUserId').value = user.id;
@@ -1900,8 +2064,8 @@
 
     function updateUser(e) {
       e.preventDefault();
-      const id = parseInt(document.getElementById('editUserId').value);
-      const index = users.findIndex(u => u.id === id);
+      const id = document.getElementById('editUserId').value;
+      const index = users.findIndex(u => u.id.toString() === id.toString());
       users[index].name = document.getElementById('editUserName').value;
       users[index].email = document.getElementById('editUserEmail').value;
       users[index].role = document.getElementById('editUserRole').value;
@@ -1913,7 +2077,7 @@
 
     function deleteUser(id) {
       if (confirm('Are you sure you want to delete this user?')) {
-        users = users.filter(u => u.id !== id);
+        users = users.filter(u => u.id.toString() !== id.toString());
         saveData();
         renderUsers();
         showNotification('User deleted successfully!');
@@ -1954,11 +2118,11 @@
                 <td>${product.category}</td>
                 <td>${product.stock}</td>
                 <td>
-                  <button class="btn btn-secondary btn-sm" onclick="editProduct(${product.id})">
+                  <button class="btn btn-secondary btn-sm" onclick="editProduct('${product.id}')">
                     <ion-icon name="create-outline"></ion-icon>
                     Edit
                   </button>
-                  <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">
+                  <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product.id}')">
                     <ion-icon name="trash-outline"></ion-icon>
                     Delete
                   </button>
@@ -2008,7 +2172,7 @@
 
     function deleteProduct(id) {
       if (confirm('Are you sure you want to delete this product?')) {
-        products = products.filter(p => p.id !== id);
+        products = products.filter(p => p.id.toString() !== id.toString());
         saveData();
         renderProducts();
         showNotification('Product deleted successfully!');
@@ -2050,7 +2214,7 @@
                 <td>AED ${order.total.toFixed(2)}</td>
                 <td><span class="badge badge-${order.status}">${order.status}</span></td>
                 <td>
-                  <select class="btn btn-sm" onchange="updateOrderStatus(${order.id}, this.value)" style="padding: 6px 10px;">
+                  <select class="btn btn-sm" onchange="updateOrderStatus('${order.id}', this.value)" style="padding: 6px 10px;">
                     <option value="">Change Status</option>
                     <option value="pending">Pending</option>
                     <option value="processing">Processing</option>
@@ -2058,7 +2222,7 @@
                     <option value="delivered">Delivered</option>
                     <option value="cancelled">Cancelled</option>
                   </select>
-                  <button class="btn btn-secondary btn-sm" onclick="viewOrderDetails(${order.id})">
+                  <button class="btn btn-secondary btn-sm" onclick="viewOrderDetails('${order.id}')">
                     <ion-icon name="eye-outline"></ion-icon>
                     View
                   </button>
@@ -2070,9 +2234,31 @@
       `;
     }
 
-    function updateOrderStatus(orderId, newStatus) {
+    async function updateOrderStatus(orderId, newStatus) {
       if (!newStatus) return;
-      const order = orders.find(o => o.id === orderId);
+
+      const token = localStorage.getItem('token');
+      if (token && typeof orderId === 'string' && orderId.length === 24) {
+        // This is a MongoDB ID, try to update on backend
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/orders/admin/${orderId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ status: newStatus.charAt(0).toUpperCase() + newStatus.slice(1) })
+          });
+          const data = await response.json();
+          if (data.success) {
+            console.log('✅ Order status updated on backend');
+          }
+        } catch (error) {
+          console.error('❌ Error updating status on backend:', error);
+        }
+      }
+
+      const order = orders.find(o => o.id.toString() === orderId.toString());
       if (order) {
         order.status = newStatus;
         saveData();
@@ -2082,7 +2268,7 @@
     }
 
     function viewOrderDetails(orderId) {
-      const order = orders.find(o => o.id === orderId);
+      const order = orders.find(o => o.id.toString() === orderId.toString());
       if (!order) return;
 
       const details = `
@@ -2168,6 +2354,11 @@ ${order.items.map((item, i) => `${i + 1}. ${item.name} - Qty: ${item.quantity} -
 
       console.log('✅ Sync complete');
       saveData();
+
+      // Also fetch from backend
+      fetchOrdersFromBackend();
+      fetchUsersFromBackend();
+      fetchProductsFromBackend();
     }
 
     // ============ INITIALIZATION ============
@@ -2203,6 +2394,9 @@ ${order.items.map((item, i) => `${i + 1}. ${item.name} - Qty: ${item.quantity} -
 
       // Check for new data
       checkForNewOrders();
+      fetchOrdersFromBackend();
+      fetchUsersFromBackend();
+      fetchProductsFromBackend();
 
       // Load dashboard
       loadDashboard();

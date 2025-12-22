@@ -117,7 +117,7 @@ exports.verifyPayment = async (req, res, next) => {
 // @access  Private/Admin
 exports.allOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find().populate('user', 'name email').sort({ createdAt: -1 });
 
         let totalAmount = 0;
 
