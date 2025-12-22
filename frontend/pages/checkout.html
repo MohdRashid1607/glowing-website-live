@@ -407,9 +407,42 @@
                 </a>
 
                 <div class="header-actions">
-                    <button class="header-action-btn" aria-label="user" onclick="window.location.href='signup.html'">
-                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-                    </button>
+
+                    <div class="user-dropdown-wrapper">
+                        <a href="signup.html" class="header-action-link" id="signup-link">
+                            <button class="header-action-btn" aria-label="user">
+                                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                            </button>
+                        </a>
+                        <button class="header-action-btn user-btn" aria-label="user" id="user-dropdown-btn"
+                            style="display: none;">
+                            <div class="user-avatar" id="user-avatar">
+                                <span id="user-initials"></span>
+                            </div>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="dropdown-header">
+                                <div class="user-info">
+                                    <p class="user-name" id="dropdown-user-name"></p>
+                                    <p class="user-email" id="dropdown-user-email"></p>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="dashboard.html" class="dropdown-item">
+                                    <ion-icon name="grid-outline"></ion-icon>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="shop.html" class="dropdown-item">
+                                    <ion-icon name="storefront-outline"></ion-icon>
+                                    <span>Shop</span>
+                                </a>
+                                <button class="dropdown-item" id="header-logout-btn">
+                                    <ion-icon name="log-out-outline"></ion-icon>
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
                         <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -614,6 +647,53 @@
                 shortly.</p>
             <p style="margin-bottom: 20px;"><strong>Order ID: <span id="orderId">#0</span></strong></p>
             <button class="btn" onclick="continueShoppingAfterOrder()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Cart Panel -->
+    <div id="cart-panel" class="side-panel">
+        <div class="panel-content">
+            <div class="panel-header">
+                <h2>Shopping Cart</h2>
+                <span class="close" id="close-cart-panel">&times;</span>
+            </div>
+            <div class="panel-body">
+                <div id="cart-items"></div>
+            </div>
+            <div class="panel-footer">
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <strong>Total: <span id="modal-cart-total">AED 0.00</span></strong>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary checkout-btn">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Panel -->
+    <div id="wishlist-panel" class="side-panel">
+        <div class="panel-content">
+            <div class="panel-header">
+                <h2>My Wishlist</h2>
+                <span class="close" id="close-wishlist-panel">&times;</span>
+            </div>
+            <div class="panel-body">
+                <div id="wishlist-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quick-view-modal" class="qv-modal">
+        <div class="qv-modal-content">
+            <div class="qv-modal-header">
+                <h2>Quick View</h2>
+                <span class="close" id="close-qv-modal">&times;</span>
+            </div>
+            <div class="qv-modal-body" id="quick-view-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
         </div>
     </div>
 

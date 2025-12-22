@@ -865,6 +865,11 @@
             // Save order to MongoDB Backend
             const backendOrder = await checkoutSystem.submitOrderToBackend('Cash on Delivery');
 
+            if (!backendOrder) {
+                // Notifying user - failure handled inside submitOrderToBackend partially but we stop here
+                return;
+            }
+
             // Hide order content
             document.getElementById('order-content').style.display = 'none';
 
@@ -875,9 +880,7 @@
             // Save order to legacy admin panel (localStorage)
             const order = saveOrderToAdmin('Cash on Delivery');
 
-            if (backendOrder) {
-                console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
-            }
+            console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
 
             if (order) {
                 console.log('🎉 Order #' + order.id + ' saved to localStorage!');

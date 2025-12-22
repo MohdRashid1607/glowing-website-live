@@ -667,7 +667,7 @@
             statusEl.classList.add('active');
 
             // Simulate Apple Pay processing (3 seconds)
-            setTimeout(() => {
+            setTimeout(async () => {
                 const statusIcon = document.getElementById('status-icon');
                 statusIcon.classList.remove('processing');
                 statusIcon.classList.add('success');
@@ -676,8 +676,18 @@
                 document.getElementById('status-title').textContent = 'Payment Successful!';
                 document.getElementById('status-message').textContent = 'Your order has been confirmed.';
 
+                // Initialize checkout system
+                const checkoutSystem = new CheckoutSystem();
+
+                // 🔥 SAVE ORDER TO MONGODB BACKEND
+                const backendOrder = await checkoutSystem.submitOrderToBackend('Apple Pay');
+
                 // Save order to admin panel
                 const order = saveOrderToAdmin('Apple Pay');
+
+                if (backendOrder) {
+                    console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
+                }
 
                 if (order) {
                     console.log('🎉 Order #' + order.id + ' saved to admin panel!');

@@ -694,12 +694,12 @@
                         // 🔥 SAVE ORDER TO MONGODB BACKEND
                         const backendOrder = await checkoutSystem.submitOrderToBackend('PayPal');
 
+                        if (!backendOrder) return;
+
                         // Save order to legacy admin panel (localStorage)
                         const order = saveOrderToAdmin('PayPal');
 
-                        if (backendOrder) {
-                            console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
-                        }
+                        console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
 
                         if (order) {
                             console.log('🎉 Order #' + order.id + ' saved to localStorage!');

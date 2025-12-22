@@ -1014,12 +1014,15 @@
                 this.textContent = 'Processing...';
 
                 // Simulate payment processing
-                setTimeout(() => {
-                    // 🎯 ADD THIS HERE - RIGHT AFTER "Payment successful!"
-                    console.log('✅ Payment successful!');
-
-                    // 🔥 CALL THE FUNCTION HERE
+                setTimeout(async () => {
+                    // 🔥 CALL THE FUNCTIONS HERE
+                    const checkoutSystem = new CheckoutSystem();
+                    const backendOrder = await checkoutSystem.submitOrderToBackend('Credit Card');
                     const order = saveOrderToAdmin('Credit Card');
+
+                    if (backendOrder) {
+                        console.log('🎉 Order saved to MongoDB: ' + backendOrder._id);
+                    }
 
                     if (order) {
                         console.log('🎉 Order #' + order.id + ' saved to admin panel!');
