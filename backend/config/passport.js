@@ -7,7 +7,8 @@ module.exports = function (passport) {
             {
                 clientID: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                callbackURL: process.env.CALLBACK_URL
+                callbackURL: process.env.CALLBACK_URL,
+                state: false
             },
             async (accessToken, refreshToken, profile, done) => {
                 const newUser = {
@@ -34,15 +35,10 @@ module.exports = function (passport) {
     );
 
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user);
     });
 
-    passport.deserializeUser(async (id, done) => {
-        try {
-            const user = await User.findById(id);
-            done(null, user);
-        } catch (err) {
-            done(err, null);
-        }
+    passport.deserializeUser((user, done) => {
+        done(null, user);
     });
 };

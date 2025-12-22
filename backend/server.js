@@ -2,9 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const connectDB = require('./config/db');
 
 const passport = require('passport');
+
+const session = require('express-session');
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +26,17 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Cookie parser
 app.use(cookieParser());
+
+// Session middleware
+app.use(session({
+    secret: process.env.JWT_SECRET || 'glowing_skincare_secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    }
+}));
 
 // Passport middleware
 app.use(passport.initialize());

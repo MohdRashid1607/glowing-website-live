@@ -297,30 +297,36 @@ if (document.querySelector('.checkout-container')) {
  * Add this to each payment page (paypal, apple-pay, cod, credit-card)
  */
 
-function completeOrder(paymentMethod) {
+async function completeOrder(paymentMethod) {
   const checkoutSystem = new CheckoutSystem();
   const orderNumber = checkoutSystem.generateOrderNumber();
 
-  // Send confirmation email
-  checkoutSystem.sendOrderConfirmationEmail(orderNumber, paymentMethod)
-    .then(success => {
-      if (success) {
-        console.log('✅ Confirmation email sent successfully');
-      } else {
-        console.log('⚠️ Email not sent, but order completed');
-      }
+  try {
+    // 1. Submit to Backend (MongoDB)
+    const backendOrder = await checkoutSystem.submitOrderToBackend(paymentMethod);
 
-      // Clear cart and checkout data
-      localStorage.removeItem('cart');
-      localStorage.removeItem('checkoutData');
+    if (backendOrder) {
+      console.log('✅ Order saved to MongoDB:', backendOrder._id);
+    }
 
-      // Redirect to success page or home
-      setTimeout(() => {
-        window.location.href = '../../index.html';
-      }, 2000);
-    });
+    // 2. Send confirmation email
+    await checkoutSystem.sendOrderConfirmationEmail(orderNumber, paymentMethod);
 
-  return orderNumber;
+    // 3. Clear cart and checkout data
+    localStorage.removeItem('cart');
+    localStorage.removeItem('checkoutData');
+
+    // 4. Redirect
+    setTimeout(() => {
+      window.location.href = '../../index.html';
+    }, 1500);
+
+    return backendOrder ? backendOrder._id : orderNumber;
+  } catch (error) {
+    console.error('❌ Error in completeOrder:', error);
+    window.location.href = '../../index.html';
+    return orderNumber;
+  }
 }
 
 // Export for use in payment pages

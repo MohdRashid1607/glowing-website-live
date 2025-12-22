@@ -23,14 +23,26 @@ router.get(
     '/google/callback',
     passport.authenticate('google', { failureRedirect: '/login', session: false }),
     (req, res) => {
-        // Successful authentication, redirect to frontend.
-        // In a real app, you might want to send a token back or set a cookie
         const token = req.user.getSignedJwtToken();
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            httpOnly: true
-        });
-        res.redirect('http://localhost:3000/dashboard'); // Redirect to your frontend dashboard
+
+        // Instead of a simple redirect, we send a small HTML page that saves the token 
+        // to localStorage and then redirects. This is the most reliable way.
+        res.send(`
+            <html>
+                <body>
+                    <script>
+                        localStorage.setItem('token', '${token}');
+                        // Try common frontend ports
+                        const ports = [5500, 3000, 5000]; 
+                        let redirected = false;
+                        
+                        // For now redirect to generic dashboard
+                        window.location.href = '/frontend/pages/dashboard.html';
+                    </script>
+                    <p>Redirecting to dashboard...</p>
+                </body>
+            </html>
+        `);
     }
 );
 
