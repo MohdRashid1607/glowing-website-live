@@ -1041,9 +1041,9 @@
       users = savedAdminUsers;
     }
 
-    let products = JSON.parse(localStorage.getItem('adminProducts')) || [
+    const DEFAULT_PRODUCTS = [
       {
-        id: 1,
+        id: 13,
         name: "Vitamin C Brightening Serum",
         price: 45.00,
         originalPrice: 55.00,
@@ -1053,10 +1053,12 @@
         rating: 5,
         reviews: 2847,
         stock: 15,
-        description: "A powerful vitamin C serum that brightens and evens skin tone."
+        description: "A powerful vitamin C serum that brightens and evens skin tone while providing antioxidant protection.",
+        isNew: true,
+        onSale: true
       },
       {
-        id: 2,
+        id: 14,
         name: "Hydrating Facial Cleanser",
         price: 28.00,
         image: "../assets/images/product-02.jpg",
@@ -1065,9 +1067,308 @@
         rating: 5,
         reviews: 1923,
         stock: 8,
-        description: "Gentle yet effective cleanser."
+        description: "Gentle yet effective cleanser that removes impurities while maintaining skin's natural moisture barrier."
+      },
+      {
+        id: 15,
+        name: "Nourishing Hair Oil",
+        price: 32.00,
+        originalPrice: 40.00,
+        image: "../assets/images/product-03.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 4,
+        reviews: 1456,
+        stock: 23,
+        description: "Luxurious hair oil blend that strengthens, shines, and protects hair from damage.",
+        onSale: true
+      },
+      {
+        id: 16,
+        name: "Rose Gold Perfume",
+        price: 89.00,
+        image: "../assets/images/product-04.jpg",
+        category: "perfume",
+        brand: "natural-glow",
+        rating: 5,
+        reviews: 892,
+        stock: 12,
+        description: "Elegant floral fragrance with notes of rose, gold amber, and white musk.",
+        isNew: true
+      },
+      {
+        id: 17,
+        name: "Anti-Aging Night Cream",
+        price: 67.00,
+        originalPrice: 85.00,
+        image: "../assets/images/product-05.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 3421,
+        stock: 5,
+        description: "Rich night cream with retinol and peptides to reduce fine lines and improve skin texture.",
+        onSale: true
+      },
+      {
+        id: 18,
+        name: "Silk Hair Scrunchies Set",
+        price: 15.00,
+        image: "../assets/images/product-06.jpg",
+        category: "accessories",
+        brand: "pure-skin",
+        rating: 4,
+        reviews: 567,
+        stock: 45,
+        description: "Set of 3 premium silk scrunchies that protect hair from breakage and reduce frizz."
+      },
+      {
+        id: 19,
+        name: "Exfoliating Body Scrub",
+        price: 38.00,
+        image: "../assets/images/product-07.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 1789,
+        stock: 18,
+        description: "Invigorating body scrub with natural sea salt and essential oils for smooth, radiant skin."
+      },
+      {
+        id: 20,
+        name: "Argan Hair Mask",
+        price: 42.00,
+        originalPrice: 52.00,
+        image: "../assets/images/product-08.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 5,
+        reviews: 1234,
+        stock: 3,
+        description: "Deep conditioning hair mask enriched with argan oil for intense hydration and repair.",
+        onSale: true
+      },
+      {
+        id: 21,
+        name: "Citrus Burst Perfume",
+        price: 76.00,
+        image: "../assets/images/product-09.jpg",
+        category: "perfume",
+        brand: "natural-glow",
+        rating: 4,
+        reviews: 678,
+        stock: 29,
+        description: "Fresh and energizing citrus fragrance perfect for daily wear.",
+        isNew: true
+      },
+      {
+        id: 22,
+        name: "Retinol Eye Cream",
+        price: 54.00,
+        image: "../assets/images/product-10.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 2156,
+        stock: 11,
+        description: "Gentle retinol eye cream that reduces dark circles and fine lines around the delicate eye area."
+      },
+      {
+        id: 23,
+        name: "Volumizing Shampoo",
+        price: 26.00,
+        image: "../assets/images/product-11.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 4,
+        reviews: 987,
+        stock: 34,
+        description: "Lightweight shampoo that adds volume and body to fine, limp hair."
+      },
+      {
+        id: 24,
+        name: "Makeup Brush Set",
+        price: 48.00,
+        originalPrice: 65.00,
+        image: "../assets/images/product-01.jpg",
+        category: "accessories",
+        brand: "pure-skin",
+        rating: 5,
+        reviews: 1543,
+        stock: 7,
+        description: "Professional makeup brush set with synthetic bristles for flawless application.",
+        onSale: true
+      },
+      {
+        id: 25,
+        name: "Hyaluronic Acid Serum",
+        price: 39.00,
+        image: "../assets/images/product-02.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 4567,
+        stock: 22,
+        description: "Intensive hydrating serum with multiple types of hyaluronic acid for plump, dewy skin."
+      },
+      {
+        id: 26,
+        name: "Coconut Hair Conditioner",
+        price: 24.00,
+        image: "../assets/images/product-03.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 4,
+        reviews: 1876,
+        stock: 16,
+        description: "Nourishing conditioner with coconut oil that softens and detangles hair."
+      },
+      {
+        id: 27,
+        name: "Vanilla Orchid Perfume",
+        price: 94.00,
+        image: "../assets/images/product-04.jpg",
+        category: "perfume",
+        brand: "natural-glow",
+        rating: 5,
+        reviews: 743,
+        stock: 9,
+        description: "Sophisticated fragrance with warm vanilla and exotic orchid notes.",
+        isNew: true
+      },
+      {
+        id: 28,
+        name: "Jade Facial Roller",
+        price: 22.00,
+        image: "../assets/images/product-05.jpg",
+        category: "accessories",
+        brand: "pure-skin",
+        rating: 4,
+        reviews: 892,
+        stock: 31,
+        description: "Authentic jade facial roller for lymphatic drainage and improved circulation."
+      },
+      {
+        id: 29,
+        name: "Peptide Firming Cream",
+        price: 72.00,
+        originalPrice: 90.00,
+        image: "../assets/images/product-06.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 2891,
+        stock: 6,
+        description: "Advanced firming cream with peptides and collagen boosters for youthful-looking skin.",
+        onSale: true
+      },
+      {
+        id: 30,
+        name: "Keratin Hair Treatment",
+        price: 58.00,
+        image: "../assets/images/product-07.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 5,
+        reviews: 1654,
+        stock: 14,
+        description: "Professional-grade keratin treatment that smooths frizz and adds shine."
+      },
+      {
+        id: 31,
+        name: "Ocean Breeze Perfume",
+        price: 68.00,
+        image: "../assets/images/product-08.jpg",
+        category: "perfume",
+        brand: "natural-glow",
+        rating: 4,
+        reviews: 567,
+        stock: 19,
+        description: "Fresh aquatic fragrance that captures the essence of ocean waves and sea breeze."
+      },
+      {
+        id: 32,
+        name: "Gua Sha Stone Set",
+        price: 18.00,
+        image: "../assets/images/product-09.jpg",
+        category: "accessories",
+        brand: "pure-skin",
+        rating: 4,
+        reviews: 1234,
+        stock: 28,
+        description: "Traditional gua sha stones for facial massage and tension relief."
+      },
+      {
+        id: 33,
+        name: "Niacinamide Pore Serum",
+        price: 35.00,
+        image: "../assets/images/product-10.jpg",
+        category: "skincare",
+        brand: "glowing",
+        rating: 5,
+        reviews: 3456,
+        stock: 13,
+        description: "Pore-refining serum with niacinamide that minimizes appearance of large pores."
+      },
+      {
+        id: 34,
+        name: "Protein Hair Mask",
+        price: 36.00,
+        originalPrice: 45.00,
+        image: "../assets/images/product-11.jpg",
+        category: "haircare",
+        brand: "bio-essence",
+        rating: 5,
+        reviews: 987,
+        stock: 2,
+        description: "Strengthening protein mask for damaged and chemically-treated hair.",
+        onSale: true
+      },
+      {
+        id: 35,
+        name: "Lavender Dreams Perfume",
+        price: 82.00,
+        image: "../assets/images/product-01.jpg",
+        category: "perfume",
+        brand: "natural-glow",
+        rating: 5,
+        reviews: 654,
+        stock: 17,
+        description: "Calming lavender fragrance with hints of bergamot and white tea."
+      },
+      {
+        id: 36,
+        name: "LED Light Therapy Mask",
+        price: 125.00,
+        originalPrice: 150.00,
+        image: "../assets/images/product-02.jpg",
+        category: "accessories",
+        brand: "pure-skin",
+        rating: 5,
+        reviews: 432,
+        stock: 4,
+        description: "Advanced LED light therapy mask for acne treatment and anti-aging benefits.",
+        onSale: true,
+        isNew: true
       }
     ];
+
+    // Initialize products - Smart Merge
+    let products = JSON.parse(localStorage.getItem('adminProducts')) || [];
+
+    // Add missing defaults to the list
+    DEFAULT_PRODUCTS.forEach(dp => {
+      const exists = products.some(p => p.id === dp.id || (p.name === dp.name && p.category === dp.category));
+      if (!exists) {
+        products.push(dp);
+      }
+    });
+
+    // Cleanup very old IDs (1, 2) if they are duplicates of new ones (13, 14)
+    products = products.filter(p => p.id >= 10 || (p.id < 10 && !DEFAULT_PRODUCTS.some(dp => dp.name === p.name)));
+
+    // Save immediately so it's ready for the first render
+    localStorage.setItem('adminProducts', JSON.stringify(products));
 
     let orders = JSON.parse(localStorage.getItem('adminOrders')) || [];
 
@@ -1833,14 +2134,9 @@ ${order.items.map((item, i) => `${i + 1}. ${item.name} - Qty: ${item.quantity} -
       const checkoutOrders = JSON.parse(localStorage.getItem('orders')) || [];
       const existingAdminOrders = JSON.parse(localStorage.getItem('adminOrders')) || [];
 
-      console.log('📦 Checkout orders:', checkoutOrders.length);
-      console.log('📦 Admin orders:', existingAdminOrders.length);
-
-      // Merge orders without duplicates
       checkoutOrders.forEach(checkoutOrder => {
         const exists = orders.find(o => o.id === checkoutOrder.id);
         if (!exists) {
-          console.log('➕ Adding new order:', checkoutOrder.id, checkoutOrder.customerName);
           orders.push(checkoutOrder);
         }
       });
@@ -1848,30 +2144,29 @@ ${order.items.map((item, i) => `${i + 1}. ${item.name} - Qty: ${item.quantity} -
       existingAdminOrders.forEach(adminOrder => {
         const exists = orders.find(o => o.id === adminOrder.id);
         if (!exists) {
-          console.log('➕ Adding admin order:', adminOrder.id, adminOrder.customerName);
           orders.push(adminOrder);
         }
       });
 
-      // 2. 🔥 SYNC USERS - This is the missing part!
+      // 2. Sync Users
       const savedUsers = JSON.parse(localStorage.getItem('adminUsers')) || [];
-
-      console.log('👤 Current in-memory users:', users.length);
-      console.log('👤 Saved users in localStorage:', savedUsers.length);
-
       savedUsers.forEach(savedUser => {
         const exists = users.find(u => u.id === savedUser.id);
         if (!exists) {
-          console.log('➕ Adding new user:', savedUser.name, savedUser.email);
           users.push(savedUser);
         }
       });
 
-      console.log('✅ Sync complete');
-      console.log('📊 Final orders:', orders.length);
-      console.log('👥 Final users:', users.length);
+      // 3. Sync Products
+      const savedProducts = JSON.parse(localStorage.getItem('adminProducts')) || [];
+      savedProducts.forEach(savedProduct => {
+        const exists = products.find(p => p.id === savedProduct.id);
+        if (!exists) {
+          products.push(savedProduct);
+        }
+      });
 
-      // Save and update UI
+      console.log('✅ Sync complete');
       saveData();
     }
 
@@ -1894,9 +2189,17 @@ ${order.items.map((item, i) => `${i + 1}. ${item.name} - Qty: ${item.quantity} -
         orders = savedOrders;
       }
 
+      // Force reload products
+      const savedProducts = JSON.parse(localStorage.getItem('adminProducts')) || [];
+      if (savedProducts.length > 0) {
+        console.log('📥 Loading', savedProducts.length, 'products from localStorage');
+        products = savedProducts;
+      }
+
       console.log('✅ Initial load complete');
       console.log('👥 Users:', users.length);
       console.log('📦 Orders:', orders.length);
+      console.log('🏷️ Products:', products.length);
 
       // Check for new data
       checkForNewOrders();
