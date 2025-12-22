@@ -1,6 +1,13 @@
 'use strict';
 
 /**
+ * Global API Configuration
+ */
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : ''; // Relative for production
+
+/**
  * Checkout System with Email Integration
  */
 
@@ -49,6 +56,17 @@ class CheckoutSystem {
     this.checkoutData.subtotal = subtotal;
     this.checkoutData.shipping = shipping;
     this.checkoutData.tax = tax;
+
+    // Store updated data in localStorage as well to be safe
+    const existingData = JSON.parse(localStorage.getItem('checkoutData')) || {};
+    localStorage.setItem('checkoutData', JSON.stringify({
+      ...existingData,
+      cart,
+      total: this.checkoutData.total,
+      subtotal: this.checkoutData.subtotal,
+      shipping: this.checkoutData.shipping,
+      tax: this.checkoutData.tax
+    }));
   }
 
   bindCheckoutFormEvents() {
@@ -107,22 +125,39 @@ class CheckoutSystem {
 
   saveCheckoutData() {
     // Collect contact information
-    const email = document.querySelector('input[type="email"]').value;
-    const phone = document.querySelector('input[type="tel"]').value;
+    const emailInput = document.querySelector('input[type="email"]');
+    const telInput = document.querySelector('input[type="tel"]');
+
+    if (!emailInput || !telInput) return;
+
+    const email = emailInput.value;
+    const phone = telInput.value;
 
     // Collect shipping information
-    const firstName = document.querySelectorAll('input[type="text"]')[0].value;
-    const lastName = document.querySelectorAll('input[type="text"]')[1].value;
-    const address = document.querySelectorAll('input[type="text"]')[2].value;
-    const city = document.querySelectorAll('input[type="text"]')[3].value;
-    const emirate = document.querySelector('select').value;
+    const textInputs = document.querySelectorAll('input[type="text"]');
+    if (textInputs.length < 4) return;
+
+    const firstName = textInputs[0].value;
+    const lastName = textInputs[1].value;
+    const address = textInputs[2].value;
+    const city = textInputs[3].value;
+    const select = document.querySelector('select');
+    const emirate = select ? select.value : 'N/A';
 
     // Save to checkoutData
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     this.checkoutData.contact = { email, phone };
     this.checkoutData.shipping = { firstName, lastName, address, city, emirate };
+    this.checkoutData.cart = cart;
 
     // Store in localStorage for payment pages to access
-    localStorage.setItem('checkoutData', JSON.stringify(this.checkoutData));
+    localStorage.setItem('checkoutData', JSON.stringify({
+      customerName: `${firstName} ${lastName}`,
+      customerEmail: email,
+      customerPhone: phone,
+      shippingAddress: `${address}, ${city}, ${emirate}`,
+      ...this.checkoutData
+    }));
 
     console.log('✅ Checkout data saved:', this.checkoutData);
   }
@@ -153,7 +188,8 @@ class CheckoutSystem {
 
     // Prepare cart items HTML
     let cartItemsHTML = '';
-    data.cart.forEach(item => {
+    const cart = data.cart || [];
+    cart.forEach(item => {
       cartItemsHTML += `
         <tr>
           <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name}</td>
@@ -165,8 +201,8 @@ class CheckoutSystem {
 
     // Email template parameters
     const templateParams = {
-      to_email: data.contact.email,
-      customer_name: `${data.shipping.firstName} ${data.shipping.lastName}`,
+      to_email: data.customerEmail || data.contact.email,
+      customer_name: data.customerName || `${data.shipping.firstName} ${data.shipping.lastName}`,
       order_number: orderNumber,
       order_date: new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -175,18 +211,18 @@ class CheckoutSystem {
       }),
 
       // Shipping details
-      shipping_name: `${data.shipping.firstName} ${data.shipping.lastName}`,
+      shipping_name: data.customerName || `${data.shipping.firstName} ${data.shipping.lastName}`,
       shipping_address: data.shipping.address,
       shipping_city: data.shipping.city,
       shipping_emirate: data.shipping.emirate,
-      shipping_phone: data.contact.phone,
+      shipping_phone: data.customerPhone || data.contact.phone,
 
       // Order details
       cart_items: cartItemsHTML,
-      subtotal: `AED ${data.subtotal.toFixed(2)}`,
-      shipping_cost: data.shipping === 0 ? 'FREE' : `AED ${data.shipping.toFixed(2)}`,
-      tax: `AED ${data.tax.toFixed(2)}`,
-      total: `AED ${data.total.toFixed(2)}`,
+      subtotal: `AED ${(data.subtotal || 0).toFixed(2)}`,
+      shipping_cost: (data.shipping === 0) ? 'FREE' : `AED ${(data.shipping || 0).toFixed(2)}`,
+      tax: `AED ${(data.tax || 0).toFixed(2)}`,
+      total: `AED ${(data.total || 0).toFixed(2)}`,
 
       payment_method: paymentMethod,
 
@@ -225,6 +261,7 @@ class CheckoutSystem {
 
   async submitOrderToBackend(paymentMethod, extraDetails = {}) {
     const data = JSON.parse(localStorage.getItem('checkoutData')) || this.checkoutData;
+    const cart = JSON.parse(localStorage.getItem('cart')) || data.cart || [];
     const token = localStorage.getItem('token');
 
     // Map payment method to enum expected by backend
@@ -233,25 +270,38 @@ class CheckoutSystem {
     else if (paymentMethod.toLowerCase().includes('card') || paymentMethod.toLowerCase().includes('credit')) mappedPaymentMethod = 'Card';
     else if (paymentMethod.toLowerCase().includes('bank')) mappedPaymentMethod = 'Bank Transfer';
 
+    // Helper to get image URL (handle both string and object)
+    const getImageUrl = (image) => {
+      if (typeof image === 'string') return image;
+      if (image && typeof image === 'object' && image.url) return image.url;
+      return 'assets/images/product-1.jpg'; // Fallback
+    };
+
     const orderData = {
       shippingInfo: {
         address: data.shipping.address || 'N/A',
         city: data.shipping.city || data.shipping.emirate || 'N/A',
-        phoneNo: data.contact.phone || 'N/A',
+        phoneNo: data.customerPhone || data.contact.phone || 'N/A',
         postalCode: '00000', // Default if not provided
         country: 'UAE'
       },
-      orderItems: data.cart.map(item => ({
-        name: item.name,
-        quantity: item.quantity,
-        image: item.image,
-        price: item.price,
-        product: null
-      })),
-      itemsPrice: data.subtotal,
-      taxPrice: data.tax,
-      shippingPrice: data.shipping,
-      totalPrice: data.total,
+      orderItems: cart.map(item => {
+        // Only send the product ID if it's a valid MongoDB ObjectId (24 char hex)
+        const productId = item._id || item.id;
+        const isValidObjectId = typeof productId === 'string' && /^[0-9a-fA-F]{24}$/.test(productId);
+
+        return {
+          name: item.name,
+          quantity: item.quantity,
+          image: getImageUrl(item.image),
+          price: item.price,
+          product: isValidObjectId ? productId : null
+        };
+      }),
+      itemsPrice: data.subtotal || 0,
+      taxPrice: data.tax || 0,
+      shippingPrice: data.shipping || 0,
+      totalPrice: data.total || 0,
       paymentMethod: mappedPaymentMethod,
       paymentInfo: {
         id: this.generateOrderNumber('PAY'),
@@ -266,6 +316,7 @@ class CheckoutSystem {
     }
 
     try {
+      console.log('📤 Submitting order to backend...', orderData);
       const response = await fetch(`${API_BASE_URL}/api/orders/new`, {
         method: 'POST',
         headers: {
@@ -281,10 +332,12 @@ class CheckoutSystem {
         return result.order;
       } else {
         console.error('❌ Backend error:', result.error);
+        alert('Error: ' + (result.error || 'Failed to save order'));
         return null;
       }
     } catch (error) {
       console.error('❌ Failed to connect to backend:', error);
+      alert('Connection Error: Could not connect to the server at ' + API_BASE_URL);
       return null;
     }
   }
@@ -297,18 +350,9 @@ class CheckoutSystem {
 }
 
 // Initialize checkout system
-if (document.querySelector('.checkout-container')) {
+if (document.querySelector('.checkout-container') || document.querySelector('.checkout-main')) {
   window.checkoutSystem = new CheckoutSystem();
 }
-
-/**
- * Payment Page Integration
- * Add this to each payment page (paypal, apple-pay, cod, credit-card)
- */
-
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:5000'
-  : ''; // Relative for production
 
 async function completeOrder(paymentMethod) {
   const checkoutSystem = new CheckoutSystem();

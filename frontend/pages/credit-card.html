@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credit Card Payment</title>
     <link rel="shortcut icon" href="../../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <style>
         :root {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -562,9 +563,41 @@
                 </a>
 
                 <div class="header-actions">
-                    <button class="header-action-btn" aria-label="user">
-                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-                    </button>
+                    <div class="user-dropdown-wrapper">
+                        <a href="signup.html" class="header-action-link" id="signup-link">
+                            <button class="header-action-btn" aria-label="user">
+                                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                            </button>
+                        </a>
+                        <button class="header-action-btn user-btn" aria-label="user" id="user-dropdown-btn"
+                            style="display: none;">
+                            <div class="user-avatar" id="user-avatar">
+                                <span id="user-initials"></span>
+                            </div>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="dropdown-header">
+                                <div class="user-info">
+                                    <p class="user-name" id="dropdown-user-name"></p>
+                                    <p class="user-email" id="dropdown-user-email"></p>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="dashboard.html" class="dropdown-item">
+                                    <ion-icon name="grid-outline"></ion-icon>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="../../index.html" class="dropdown-item active">
+                                    <ion-icon name="home-outline"></ion-icon>
+                                    <span>Home</span>
+                                </a>
+                                <button class="dropdown-item" id="header-logout-btn">
+                                    <ion-icon name="log-out-outline"></ion-icon>
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <button class="header-action-btn" aria-label="favourite item" id="wishlist-btn">
                         <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -705,6 +738,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
+    <script src="../assets/js/script.js"></script>
     <script src="../assets/js/checkout-handler.js"></script>
     <script src="../assets/js/checkout-order-manager.js"></script>
 
