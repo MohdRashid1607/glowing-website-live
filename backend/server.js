@@ -47,22 +47,22 @@ app.use(cors({
     credentials: true
 }));
 
-// Serve static files from the frontend directory
-app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
-
 // Explicitly serve index.html and favicon from root
 app.get('/index.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.resolve(__dirname, '../index.html'));
 });
 
 app.get('/favicon.svg', (req, res) => {
-    res.sendFile(path.join(__dirname, '../favicon.svg'));
+    res.sendFile(path.resolve(__dirname, '../favicon.svg'));
 });
 
 // Redirect root to index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.resolve(__dirname, '../index.html'));
 });
+
+// Serve static files from the frontend directory
+app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
 
 // Route files
 const authRoutes = require('./routes/auth');
@@ -80,7 +80,7 @@ app.use('/api/orders', orderRoutes);
 app.use(errorHandler);
 
 // Basic health check route
-app.get('/', (req, res) => {
+app.get('/api/health', (req, res) => {
     res.send('API is running...');
 });
 

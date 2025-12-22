@@ -21,23 +21,27 @@ const toggleNavbar = function () {
   document.body.classList.toggle("active");
 }
 
-addEventOnElem(navTogglers, "click", toggleNavbar);
+const closeNavbar = function () {
+  if (navbar) navbar.classList.remove("active");
+  if (overlay) overlay.classList.remove("active");
+  document.body.classList.remove("active");
+}
+
+if (navTogglers.length > 0) {
+  addEventOnElem(navTogglers, "click", toggleNavbar);
+}
 
 // Add specific close listeners for individual links to ensure they close the navbar
 if (navbarLinks.length) {
   addEventOnElem(navbarLinks, "click", function () {
-    if (navbar) navbar.classList.remove("active");
-    if (overlay) overlay.classList.remove("active");
-    document.body.classList.remove("active");
+    closeNavbar();
   });
 }
 
 // Ensure clicking the overlay also closes the navbar
 if (overlay) {
   overlay.addEventListener("click", function () {
-    if (navbar) navbar.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.classList.remove("active");
+    closeNavbar();
   });
 }
 
@@ -49,12 +53,14 @@ const header = document.querySelector("[data-header]");
 const backTopBtn = document.querySelector("[data-back-top-btn]");
 
 const headerActive = function () {
-  if (window.scrollY > 150) {
-    header.classList.add("active");
-    backTopBtn.classList.add("active");
-  } else {
-    header.classList.remove("active");
-    backTopBtn.classList.remove("active");
+  if (header && backTopBtn) {
+    if (window.scrollY > 150) {
+      header.classList.add("active");
+      backTopBtn.classList.add("active");
+    } else {
+      header.classList.remove("active");
+      backTopBtn.classList.remove("active");
+    }
   }
 }
 
@@ -63,10 +69,12 @@ addEventOnElem(window, "scroll", headerActive);
 let lastScrolledPos = 0;
 
 const headerSticky = function () {
-  if (lastScrolledPos >= window.scrollY) {
-    header.classList.remove("header-hide");
-  } else {
-    header.classList.add("header-hide");
+  if (header) {
+    if (lastScrolledPos >= window.scrollY) {
+      header.classList.remove("header-hide");
+    } else {
+      header.classList.add("header-hide");
+    }
   }
 
   lastScrolledPos = window.scrollY;
@@ -87,8 +95,10 @@ const scrollReveal = function () {
   }
 }
 
-scrollReveal();
-addEventOnElem(window, "scroll", scrollReveal);
+if (sections.length > 0) {
+  scrollReveal();
+  addEventOnElem(window, "scroll", scrollReveal);
+}
 
 /**
  * Hero Carousel Functionality
@@ -836,9 +846,11 @@ class AuthUIManager {
   logout() {
     if (confirm('Are you sure you want to logout?')) {
       localStorage.removeItem('currentUser');
+      localStorage.removeItem('token');
       localStorage.removeItem('rememberUser');
-      const isPage = window.location.pathname.includes('pages/');
-      window.location.href = isPage ? './frontend/./frontend/index.html' : 'index.html';
+
+      const isInSubdir = window.location.pathname.includes('/frontend/pages/') || window.location.pathname.includes('\\frontend\\pages\\');
+      window.location.href = isInSubdir ? '../../index.html' : 'index.html';
     }
   }
 }
