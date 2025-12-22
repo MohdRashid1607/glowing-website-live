@@ -1,88 +1,153 @@
-# Glowing - Premium Skincare Fullstack Platform
+# Glowing – Premium Skincare Full-Stack Platform
 
-A high-performance e-commerce ecosystem built with a focus on premium aesthetics and robust functionality. This project covers everything from a liquid-smooth frontend experience to a comprehensive management dashboard and a secure Node.js backend.
+Glowing is a full-stack e-commerce web application developed as an academic project, focused on clean architecture, modular design, and practical implementation of modern web technologies. The project demonstrates the integration of a responsive frontend with a secure Node.js backend and a MongoDB database.
 
-## �️ Full-Stack Overview
+## Full-Stack Overview
 
-This project is a complete end-to-end solution featuring:
-- **Client Side**: 10+ responsive pages including Shop, Collection, Blog, and a custom Checkout flow.
-- **Admin Side**: A desktop-optimized dashboard for managing sales, users, and inventory.
-- **Backend API**: A Node.js/Express server handling authentication, database operations, and file uploads.
+This project represents an end-to-end web solution consisting of:
 
----
+### Client Side (Frontend)
+A multi-page responsive interface including Shop, Collections, Blog, About, Contact, and Checkout flows.
 
-## 🚀 Core Features
+### Admin Interface
+A dashboard designed for managing products, users, and order-related data.
 
-### � Frontend Excellence
-- **Custom JS Systems**: Decoupled systems for `Cart`, `Wishlist`, `QuickView`, and `RecentlyViewed` to ensure high performance.
-- **Responsive Navigation**: Full mobile support with a custom-built sidebar and sticky header logic.
-- **Dynamic Shop**: Advanced product grid with real-time filtering (Category, Brand, Price, Rating) without page reloads.
-- **UX Details**: Micro-animations, hover effects, image lazy-loading, and a preloader for a premium feel.
-- **Auth Flow**: Integrated Google OAuth and traditional JWT login/signup with custom validations.
+### Backend API
+A Node.js and Express-based server responsible for authentication, database operations, and API handling.
 
-### 📊 Admin Intelligence
-- **Real-time Stats**: Interactive data visualization using **Chart.js** (Revenue logs, Order status, Category performance).
-- **Inventory Control**: Full CRUD interface to add, delete, and modify products with automatic sync across the site.
-- **User Auditing**: Management portal to monitor customer registrations and administrative roles.
-- **Order Processing**: Live order tracking system allowing admins to update shipment statuses.
+## Core Features
 
-### 🔐 Secure Backend
-- **RESTful API**: Structured endpoints for all e-commerce operations.
-- **Database**: MongoDB integration via Mongoose with optimized schemas for Orders and Users.
-- **Security**: Password hashing with Bcrypt, JWT session management, and protected Admin routes.
-- **Integrations**: Supports PayPal and Cash on Delivery (COD) payment modes.
+### Frontend Features
+- **Modular JavaScript architecture** for core systems such as Cart, Wishlist, Recently Viewed, and Authentication.
+- **Fully responsive layout** with mobile-friendly navigation and adaptive UI components.
+- **Dynamic product listing** with category-based filtering and client-side interactions.
+- **User experience enhancements** including hover effects, lazy-loaded images, and smooth UI transitions.
+- **Integration** with backend authentication services.
 
----
+### Admin Dashboard
+- **Data visualization** using Chart.js to display order and user-related information.
+- **Product management interface** supporting Create, Read, Update, and Delete (CRUD) operations.
+- **User monitoring functionality** to review registered users.
+- **Order status management** for administrative control.
 
-## � Tech Stack
+### Backend Functionality
+- **RESTful API architecture** following MVC principles.
+- **MongoDB database integration** using Mongoose.
+- **Secure user authentication** using JWT.
+- **Google OAuth 2.0 integration** via Passport.js.
+- **Password hashing** using bcrypt.
+- **Role-based access control** for protected admin routes.
+- **Image upload handling** using Multer (local storage).
 
-- **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+), Ionicons, Chart.js.
-- **Backend**: Node.js, Express.js.
-- **Database**: MongoDB, Mongoose.
-- **Authentication**: JWT, Passport.js (Google OAuth 2.0).
-- **Storage**: Multer for local product images.
+## Tech Stack
 
----
+### Frontend
+- HTML5
+- CSS3 (Vanilla CSS)
+- JavaScript (ES6+)
+- Chart.js
+- Ionicons
 
-## 📦 Local Setup
+### Backend
+- Node.js
+- Express.js
 
-### Backend (Server)
-1. Go to the `backend` directory: `cd backend`
-2. Install packages: `npm install`
-3. Configure your `.env`:
+### Database
+- MongoDB
+- Mongoose
+
+### Authentication
+- JSON Web Tokens (JWT)
+- Passport.js (Google OAuth 2.0)
+
+### File Handling
+- Multer (local image storage)
+
+## Local Setup
+
+### Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file and configure:
    ```env
    PORT=5000
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
-   GOOGLE_CLIENT_ID=your_google_id
-   GOOGLE_CLIENT_SECRET=your_google_secret
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
    ```
-4. Run the server: `npm run dev`
+4. Run the server in development mode:
+   ```bash
+   npm run dev
+   ```
 
-### Frontend (Client)
-- No build step required. Open `index.html` via Live Server or simply drag into any browser.
-- Ensure the backend is running on port 5000 for full functionality.
+### Frontend Setup
+- No build step required.
+- Open `frontend/index.html` using Live Server or directly in a browser.
+- Ensure the backend server is running on port 5000 for full functionality.
 
----
+## API Overview
 
-## 📂 Project Structure
+Sample API endpoints implemented in the backend:
 
-- `frontend/`: All client-side assets, pages, and logic.
-  - `assets/css/`: Modular stylesheets.
-  - `assets/js/`: Core systems (Cart, Auth, Shop).
-  - `pages/`: Admin, Shop, Blog, etc.
-- `backend/`: Server-side logic.
-  - `models/`: Database schemas.
-  - `routes/`: API controllers.
-- `root/`: Project documentation and config files.
+### Authentication
+- `POST /api/auth/register` – User registration
+- `POST /api/auth/login` – User login
+- `GET /api/auth/logout` – User logout
+- `GET /api/auth/me` – Get current user details
+- `GET /api/auth/google` – Google OAuth login
+- `GET /api/auth/admin/users` – Get all users (Admin only)
 
----
+### Products
+- `GET /api/products` – Fetch all products
+- `GET /api/products/:id` – Fetch a single product
+- `POST /api/products` – Add a new product (Admin only)
+- `PUT /api/products/:id` – Update an existing product (Admin only)
+- `DELETE /api/products/:id` – Delete a product (Admin only)
 
-## � Admin Credentials
-To access the Dashboard (`/frontend/pages/admin.html`):
+### Orders
+- `POST /api/orders/new` – Place a new order
+- `POST /api/orders/verify-payment` – Verify payment status
+- `GET /api/orders/me` – Get currently logged-in user's orders
+- `GET /api/orders/:id` – Get single order details
+- `GET /api/orders/admin/all` – Get all store orders (Admin only)
+- `PUT /api/orders/admin/:id` – Update order status (Admin only)
+
+## Project Structure
+
+```text
+frontend/
+ ├── assets/
+ │   ├── css/
+ │   └── js/
+ ├── images/
+ ├── pages/
+ └── index.html
+
+backend/
+ ├── config/
+ ├── controllers/
+ ├── models/
+ ├── routes/
+ ├── middleware/
+ ├── utils/
+ └── server.js
+```
+
+## Admin Access
+
+Administrative users are seeded in the database for demonstration purposes. Credentials can be configured directly through the database.
+
+**Default Test Admin:**
 - **Email**: `admin@test.com`
 - **Password**: `admin123`
 
----
+## Developer
 
-**Developed by Muhammad Abdul Rashid**
+Developed by **Muhammad Abdul Rashid**
