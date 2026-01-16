@@ -72,6 +72,7 @@ A Node.js and Express-based server responsible for authentication, database oper
 - **Password hashing** using bcrypt.
 - **Role-based access control** for protected admin routes.
 - **Image upload handling** using Multer (local storage).
+- **AI-Powered Chatbot** using Google Gemini AI, trained on website content for customer support.
 
 ## Tech Stack
 
@@ -85,6 +86,7 @@ A Node.js and Express-based server responsible for authentication, database oper
 ### Backend
 - Node.js
 - Express.js
+- Google Gemini AI
 
 ### Database
 - MongoDB
@@ -115,7 +117,9 @@ A Node.js and Express-based server responsible for authentication, database oper
    JWT_SECRET=your_jwt_secret
    GOOGLE_CLIENT_ID=your_google_client_id
    GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GEMINI_API_KEY=your_gemini_api_key
    ```
+   **Note:** Get your free Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 4. Run the server in development mode:
    ```bash
    npm run dev
@@ -153,6 +157,12 @@ Sample API endpoints implemented in the backend:
 - `GET /api/orders/admin/all` – Get all store orders (Admin only)
 - `PUT /api/orders/admin/:id` – Update order status (Admin only)
 
+### Chatbot
+- `POST /api/chatbot/message` – Send a message to the AI chatbot
+- `GET /api/chatbot/conversation/:sessionId` – Get conversation history
+- `DELETE /api/chatbot/conversation/:sessionId` – Clear conversation history
+- `GET /api/chatbot/suggestions` – Get suggested questions
+
 ## Project Structure
 
 ```text
@@ -177,6 +187,36 @@ backend/
 ## Admin Access
 
 Administrative users are seeded in the database for demonstration purposes. Credentials can be configured directly through the database.
+
+## AI Chatbot
+
+The website features an intelligent AI-powered chatbot that provides instant customer support. The chatbot is trained on your website's content and can answer questions about:
+
+- Products and their benefits
+- Pricing and promotions
+- Shipping and delivery
+- Payment methods
+- Skincare tips and advice
+- General website navigation
+
+### Quick Setup
+
+1. Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Add `GEMINI_API_KEY=your_api_key` to your `backend/.env` file
+3. Install dependencies: `cd backend && npm install`
+4. Start the server: `npm run dev`
+
+For detailed setup instructions, customization options, and API documentation, see [CHATBOT_GUIDE.md](CHATBOT_GUIDE.md).
+
+### Features
+
+- 🤖 AI-powered natural conversations using Google Gemini
+- 💬 Persistent conversation history
+- 🎨 Beautiful, modern UI with smooth animations
+- 📱 Fully responsive design
+- 🔒 Privacy-focused (auto-delete after 30 days)
+- ⚡ Real-time responses
+- 💡 Smart suggested questions
 
 ## Developer
 
