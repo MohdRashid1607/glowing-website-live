@@ -239,6 +239,12 @@ class ModernAuthManager {
         });
         const meData = await meResponse.json();
         this.currentUser = meData.data;
+        // Format the user object with firstName/lastName for consistent UI
+        if (this.currentUser && this.currentUser.name) {
+          const parts = this.currentUser.name.split(' ');
+          this.currentUser.firstName = parts[0] || this.currentUser.name;
+          this.currentUser.lastName = parts.slice(1).join(' ') || '';
+        }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
         // Add success animation to button
@@ -268,6 +274,7 @@ class ModernAuthManager {
     const formData = new FormData(form);
     const name = formData.get('fullName');
     const email = formData.get('email');
+    const phone = formData.get('phone');
     const password = formData.get('password');
 
     // Validate form
@@ -288,7 +295,7 @@ class ModernAuthManager {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password, phone })
       });
 
       const data = await response.json();
@@ -304,6 +311,12 @@ class ModernAuthManager {
         });
         const meData = await meResponse.json();
         this.currentUser = meData.data;
+        // Format the user object with firstName/lastName for consistent UI
+        if (this.currentUser && this.currentUser.name) {
+          const parts = this.currentUser.name.split(' ');
+          this.currentUser.firstName = parts[0] || this.currentUser.name;
+          this.currentUser.lastName = parts.slice(1).join(' ') || '';
+        }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
         // Add success animation
@@ -439,9 +452,14 @@ class ModernAuthManager {
     // Update header user button if on other pages
     const userBtn = document.querySelector('.header-action-btn[aria-label="user"]');
     if (userBtn && this.currentUser) {
+      const firstName = this.currentUser.firstName || (this.currentUser.name ? this.currentUser.name.split(' ')[0] : 'U');
+      const lastName = this.currentUser.lastName || (this.currentUser.name && this.currentUser.name.split(' ').length > 1 ? this.currentUser.name.split(' ')[1] : '');
+
+      const initials = (firstName.charAt(0) + (lastName ? lastName.charAt(0) : '')).toUpperCase();
+
       userBtn.innerHTML = `
-        <div class="user-avatar">
-          <span>${this.currentUser.firstName.charAt(0)}${this.currentUser.lastName.charAt(0)}</span>
+        <div class="user-avatar" style="background: var(--gold); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">
+          <span>${initials}</span>
         </div>
       `;
     }
